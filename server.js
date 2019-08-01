@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require ('mongoose');
 const bodyParser = require ('body-parser');
-//const passport = require('passport');
+const passport = require('passport');
 const path = require ('path');
 const cors = require ('cors');
 
@@ -31,11 +31,11 @@ mongoose
 
 //Passport Middleware
 
-// app.use(passport.initialize());
+ app.use(passport.initialize());
 
 //Passport config
 
-// require('./config/passport')(passport);
+ require('./config/passport')(passport);
 
 const port = process.env.PORT || 4000;
 
