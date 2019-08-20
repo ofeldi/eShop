@@ -1,14 +1,13 @@
-const express = require ('express');
+const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require ('jsonwebtoken');
-const keys = require ('../../config/keys');
-const passport = require ('passport');
 
-const User = require('../../models/User')
+const userController = require('../../controllers/user');
 
-router.get('/',function(req,res){
-    res.json("hello");
-})
+router.post('/registerCheck', userController.checkUserCredentials);
+
+router.post('/register', userController.createUser);
+
+router.post('/login', userController.userLogin);
+
 
 module.exports = router;

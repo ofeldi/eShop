@@ -1,49 +1,50 @@
 const express = require('express');
-const mongoose = require ('mongoose');
-const bodyParser = require ('body-parser');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const passport = require('passport');
-const path = require ('path');
-const cors = require ('cors');
+const path = require('path');
+const cors = require('cors');
 
-//API Routes
+// Api Routes
 const user = require('./routes/api/user');
+const product = require('./routes/api/product');
+const cart = require('./routes/api/cart');
+const category = require('./routes/api/category');
+const order = require('./routes/api/order');
 
-//API routes
+// Express
+const app = express();
 
-const app = express ();
-
-//body parser middleware
+// Body Parser middleware
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// Cors
 app.use(cors());
 
-//DB config
+// DB Config
+const db = require('./config/keys').mongoURI;
 
-const db = require ('./config/keys').mongoURI;
-
-//connect to mongo db
-
+// Connect to MongoDB
 mongoose
-.connect(db,{useNewUrlParser:true, useFindAndModify:false})
-.then(()=>console.log('Mongo db Connected'))
-.catch(err=>console.log(err));
+    .connect(db, {useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true})
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
 
-//Passport Middleware
+// Passport middleware
+app.use(passport.initialize());
 
- app.use(passport.initialize());
-
-//Passport config
-
- require('./config/passport')(passport);
+// Passport Config
+require('./config/passport')(passport);
 
 const port = process.env.PORT || 4000;
 
+// Use Routes
 app.use('/api/user', user);
+app.use('/api/cart', cart);
+app.use('/api/product', product);
+app.use('/api/category', category);
+app.use('/api/order', order);
 
-//Use Routes
-app.listen(port,()=>console.log(`Server is running on port ${port}`));
-
-
-
-
+// Listen
+app.listen(port, () => console.log(`Server is running on port ${port}`));
