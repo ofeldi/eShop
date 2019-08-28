@@ -5,16 +5,20 @@ const passport = require('passport');
 const productController = require('../../controllers/product');
 const authenticate = passport.authenticate('jwt',{session:false});
 
-//Gets product from the database
+//Get all products from the database
 router.get('/products',productController.getAllProducts);
 
 //Creates new Product: Admin
 router.post('/createNewProduct',authenticate,productController.createNewProduct);
 
 //Get product by categoryId
-router.get('productsByCategory/:id',productController.getProductsByCategory);
+router.get('/productsByCategory/:id',productController.getProductsByCategory);
 
 //Gets a product by productName
 router.get('/productByName/:name',productController.getProductByName);
+
+// Gets a product by product id
+router.get('/getProductById/:id',productController.getProductById);
+
 
 module.exports = router;

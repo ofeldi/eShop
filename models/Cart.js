@@ -12,8 +12,7 @@ const CartSchema = new Schema({
         required:true
     },
     isOpen:{
-      type:Boolean,
-        default:true,
+      type:Number,
         required:true
     },
     products:[{

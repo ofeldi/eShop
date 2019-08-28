@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {MatStepper} from "@angular/material";
+import { Router } from "@angular/router";
 
 export interface city {
   value: string;
@@ -21,7 +22,7 @@ export class SignupComponent implements OnInit {
   formIsValid: boolean = false;
   userIsReistered: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router:Router) {
   }
 
   ngOnInit() {
@@ -90,6 +91,13 @@ export class SignupComponent implements OnInit {
     console.log(user);
     this.authService.registerUser(user).subscribe(user => {
       console.log(user);
+      if(user){
+        const loginDetails = {
+          email:credentials.email,
+          password:credentials.password
+        }
+        this.redirectToDashboard(loginDetails);
+      }
     }, err => {
       if (err.status === 400) {
         Object.keys(err.error).forEach(prop => {
@@ -115,7 +123,7 @@ export class SignupComponent implements OnInit {
 
   allowNumberOnly(e){
     const code = (e.which) ? e.which : e.keycode;
-    if (code < 31 && (code <48 || code > 57)){
+    if (code > 31 && (code < 48 || code > 57)){
       e.preventDefault()
     }
   }
@@ -124,5 +132,17 @@ export class SignupComponent implements OnInit {
     e.preventDefault();
     return false;
   }
+  redirectToDashboard(loginDetails){
+    this.authService.loginUser(loginDetails).subscribe(data =>{
+      if (data.success){
+        this.authService.storeUserData(data.token,data.user);
+        this.authService.loadToken();
+        this.router.navigate(['dashboard']);
+      }
+    })
+  }
+
+
+
 
 }

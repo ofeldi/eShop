@@ -4,7 +4,9 @@ exports.createNewCart = (req, res) => {
     const cart = new Cart({
         userId: req.body.userId,
         date: new Date(),
-        isOpen: true
+        isOpen: 0,
+
+
     });
     cart.save()
         .then(cart => {
@@ -26,10 +28,10 @@ exports.addProductToCart = (req, res) => {
         $push: {
             products: {
                 _id: req.body._id,
-                name: req.body.name,
-                quantity: req.body.quantity,
+                quantity: req.body.quantity
+/*              name: req.body.name,
                 price: req.body.price,
-                imageURL: req.body.imageURL
+                imageURL: req.body.imageURL*/
             }
         }
     }, {new: true})
@@ -75,7 +77,7 @@ exports.getCartById = (req, res) => {
         })
 };
 
-exports.getUserCart = (req, res) => {
+/*exports.getUserCart = (req, res) => {
     Cart.find({userId: req.params.id, isOpen: true})
         .then(cart => {
             if (cart.length === 0) {
@@ -103,5 +105,49 @@ exports.getUserCart = (req, res) => {
             }
         })
         .catch(err => console.log(err))
-};
+};*/
 
+exports.getUserCartStatus = (req, res) => {
+    Cart.findOne({userId: req.params.id})
+        .then(cart => {
+            if (cart.length === 0) {
+                return res.status(202).json({
+                    status: 2,
+                    msg: "no carts"
+                })
+            }
+            if (cart.isOpen === 0) {
+                return res.status(200).json({
+                    msg: "cart exists",
+                    status: 0,
+                    cart: cart
+                })
+            }
+            if (cart.isOpen === 1) {
+                return res.status(201).json({
+                    msg: `you have an open cart from ${cart.date}`,
+                    status: 1,
+                    cart: cart
+                })
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send(err);
+        })
+}
+
+
+exports.updateCartStatus = (req,res) => {
+    Cart.findOneAndUpdate({_id: req.params.id}, req.body)
+        .then(() => {
+            Cart.findOne({_id: req.params.id})
+                .then(cart => {
+                    res.status(200).json(cart)
+                })
+        })
+        .catch(err =>{
+            console.error(err);
+            res.status(500).send(err);
+        })
+}

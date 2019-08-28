@@ -14,10 +14,7 @@ exports.createNewCategory = (req, res) => {
 
 exports.getCategories = (req,res) => {
     Category.find({})
-        .then(allCategories => res.status(200).json({
-            msg: "categories fetched",
-            categories: allCategories
-        }))
+        .then(allCategories => res.status(200).json(allCategories))
         .catch(err => res.status(500).json({
             msg: "could not fetch categories"
         }))

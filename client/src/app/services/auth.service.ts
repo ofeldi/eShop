@@ -17,6 +17,7 @@ const httpOptions = {
 export class AuthService {
 authToken:String;
 loggedUser:User;
+currentUserData:User;
 
   constructor(private http: HttpClient) { }
 
@@ -40,6 +41,11 @@ loggedUser:User;
     localStorage.setItem('user',JSON.stringify(loggedUser));
     this.authToken = token;
     this.loggedUser = loggedUser;
+  }
+
+  loadToken(){
+   this.authToken = localStorage.getItem('id_token');
+   this.currentUserData = JSON.parse(localStorage.getItem('user'));
   }
 
   isLoggedUser(){

@@ -57,12 +57,9 @@ exports.createNewOrder = (req, res) => {
         });
 };
 
-exports.getNumOfOrders = (req, res) => {
+exports.getOrders = (req, res) => {
     Order.find({})
-        .then(orders => res.status(200).json({
-            msg: "success",
-            orders: orders.length
-        }))
+        .then(orders => res.status(200).json(orders))
         .catch(err => res.status(500).json({
             msg: "could not find any orders"
         }))

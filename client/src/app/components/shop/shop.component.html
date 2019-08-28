@@ -1,0 +1,27 @@
+<button mat-button *ngFor="let category of categories" (click)="filterProductsByCategory(category._id)">
+  {{ category.name }}
+</button>
+<div class="example-sidenav-content">
+  <button type="button" mat-button (click)="drawer.toggle()">
+    My Cart
+  </button>
+</div>
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>My Products in My cart</p>
+    <div *ngFor="let product of productsInCart"><div></div></div>
+
+    <!--<button (click)="showFiller = !showFiller" mat-raised-button>
+      Toggle extra text
+    </button>-->
+  </mat-drawer>
+
+  <mat-card class="col-4" *ngFor="let product of ProductsByCategory">
+    <img class="card-img-top" [src]="product.imageURL">
+    <div>{{ product.name}}</div>
+    <div>{{product.price}} $</div>
+    <button mat-button (click)="addProductToCart(product._id,1)">Add to Cart</button>
+  </mat-card>
+  <div>{{currentCartProducts}}</div>
+</mat-drawer-container>

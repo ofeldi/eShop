@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,7 +11,11 @@ export class LoginComponent implements OnInit {
 loginForm: FormGroup;
 private userIsLoggedIn: boolean = false;
 
-  constructor(private formBuilder:FormBuilder, private authService:AuthService) { }
+  constructor(private formBuilder:FormBuilder,
+              private authService:AuthService,
+              private router : Router
+
+  ) { }
 
   ngOnInit() {
    this.loginForm = this.formBuilder.group({
@@ -25,7 +29,9 @@ private userIsLoggedIn: boolean = false;
 
   this.authService.loginUser(loginDetails).subscribe(data =>{
     if (data.success){
-      this.authService.storeUserData(data.token,data.user);console.log(data.user);
+      this.authService.storeUserData(data.token,data.user);
+      this.authService.loadToken();
+      this.router.navigate((['dashboard']));
     }
   }, err => {
     if (err.status === 400) {

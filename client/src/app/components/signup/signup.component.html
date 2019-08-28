@@ -3,7 +3,7 @@
     <form (ngSubmit)="onFirstStepSubmit()" [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Fill in your details Step 1</ng-template>
       <mat-form-field>
-      <input type="id" matInput placeholder="Identity Number" formControlName="identityNumber"
+      <input matInput placeholder="Identity Number" formControlName="identityNumber"
       (keydown)="allowNumberOnly($event)"
              (paste)="preventPaste($event)">
           <mat-error *ngIf="firstFormGroup.get('identityNumber').errors?.serverError">
@@ -12,7 +12,7 @@
       </mat-form-field>
       <div>
         <mat-form-field>
-        <input type="email" matInput placeholder="em@il" formControlName="email">
+        <input matInput placeholder="em@il" formControlName="email">
           <mat-error *ngIf="firstFormGroup.get('email').errors?.serverError">
             {{ firstFormGroup.get('email').errors?.serverError}}
           </mat-error>
@@ -41,7 +41,7 @@
     <form (ngSubmit)="onSecondStepSubmit()" [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Fill in your details Step 2</ng-template>
       <mat-form-field>
-        <input type="text" matInput placeholder="First Name" formControlName="firstName">
+        <input matInput placeholder="First Name" formControlName="firstName">
         <mat-error *ngIf="secondFormGroup.get('firstName').errors?.serverError">
           {{ secondFormGroup.get('firstName').errors?.serverError}}
         </mat-error>

@@ -1,0 +1,8 @@
+<div>dashboard</div>
+<!--set go the shop as ngIf cart is opened-->
+<div>Welcome:
+  {{ capFirstLetter(authService.currentUserData.firstName)}} {{ capFirstLetter(authService.currentUserData.lastName)}}
+</div>
+<button mat-menu-item routerLink="/shop">Shop</button>
+<h1>Num of products in the shop: {{numOfProducts}}</h1>
+<div>{{cartStatus}}</div>

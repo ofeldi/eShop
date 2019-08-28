@@ -1,1 +1,5 @@
-<p>home works!</p>
+<div>home</div>
+<button mat-button *ngIf="authService.isLoggedUser()" routerLink="shop">Continue Shopping</button>
+<div>num of products in the shop: {{numOfProducts}}</div>
+<div>num of orders in the shop: {{numOfOrders}}</div>
+

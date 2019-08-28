@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+
+import { AuthGuard } from "./gurds/auth.gurd";
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatStepperModule } from "@angular/material/stepper";
@@ -9,18 +13,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatInputModule , MatSelectModule } from "@angular/material";
+import {MatCardModule, MatInputModule, MatMenuModule, MatSelectModule} from "@angular/material";
+import { MatFormFieldModule, MatToolbarModule } from "@angular/material";
 
+import { SignupComponent } from './components/signup/signup.component';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ShopComponent } from './components/shop/shop.component';
 import { AppComponent } from './app.component';
 import { HomeComponent } from "./components/home/home.component";
 import { NavbarComponent } from "./components/layout/navbar/navbar.component";
 
-import { SignupComponent } from './components/signup/signup.component';
-import {MatFormFieldModule, MatToolbarModule} from "@angular/material";
-import {ReactiveFormsModule, FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import { LoginComponent } from './components/login/login.component';
-
+import { NgRedux,NgReduxModule,DevToolsExtension } from "ng2-redux";
+import { IAppState, rootReducer } from "./store";
+import { INITIAL_STATE } from './store';
+import { SidebarComponent } from './components/layout/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -29,7 +36,10 @@ import { LoginComponent } from './components/login/login.component';
     NavbarComponent,
     HomeComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    ShopComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +57,19 @@ import { LoginComponent } from './components/login/login.component';
     ReactiveFormsModule,
     FormsModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    MatMenuModule,
+    NgReduxModule,
+    MatCardModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(ngRedux: NgRedux<IAppState>,
+              devTools: DevToolsExtension,
+  ){
+    const enhancers = isDevMode() ? [devTools.enhancer()] : [];
+   ngRedux.configureStore(rootReducer,INITIAL_STATE,[],enhancers);
+  }
+}
