@@ -12,7 +12,6 @@ export class DashboardComponent implements OnInit {
 numOfProducts : number;
   userId: String = JSON.parse(localStorage.getItem('user')).id;
   userToken: any = localStorage.getItem('id_token');
-  userCartStatus:Number;
   cartStatus:String;
 
 
@@ -26,12 +25,12 @@ numOfProducts : number;
     this.cartService.getUserCartStatus(this.userId, this.userToken).subscribe(data => {
         if (data.status ===0){
           console.log(data);
-          this.userCartStatus=0;
+          this.authService.storeCartData(data.cart);
           return;
         }
         if (data.status ===1){
           console.log(data);
-          this.userCartStatus =1;
+          this.authService.storeCartData(data.cart);
           return;
         } else {
           const userId = {userId : this.userId}

@@ -3,7 +3,7 @@ export interface Cart {
   _id:String;
   userId:string;
   date:any;
-  isOpen:boolean;
+  isOpen:number;
   products:[];
   status: number;
   cart:Cart;

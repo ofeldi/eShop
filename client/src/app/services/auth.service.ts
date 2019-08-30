@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { Credentials } from "../models/Credentials";
 import {User} from "../models/User";
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {Cart} from "../models/Cart";
 
 const httpOptions = {
   headers:new HttpHeaders({
@@ -18,7 +19,7 @@ export class AuthService {
 authToken:String;
 loggedUser:User;
 currentUserData:User;
-
+userCart:Cart;
   constructor(private http: HttpClient) { }
 
   checkUserCredentials (userCredentials):Observable<Credentials>{
@@ -62,5 +63,11 @@ currentUserData:User;
     localStorage.clear();
   }
 
+storeCartData = (currentUserCart) =>{
+localStorage.setItem('cart',JSON.stringify(currentUserCart));
+  }
 
+  loadUserCart (){
+    this.userCart = JSON.parse(localStorage.getItem('cart'));
+  }
 }

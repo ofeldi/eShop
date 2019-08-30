@@ -32,4 +32,8 @@ export class CartService {
     return this.http.put<Product>(`http://localhost:4000/api/cart/addProductToCart/${cartId}`,product,{headers:{Authorization:token}})
   }
 
+  updateCartStatus(cartId,product,token):Observable<Cart>{
+    return this.http.put<Cart>(`http://localhost:4000/api/cart/updateCartStatus/${cartId}`,product,{headers:{Authorization:token}})
+  }
+
 }

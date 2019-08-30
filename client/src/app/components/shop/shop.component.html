@@ -10,7 +10,9 @@
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav" mode="side">
     <p>My Products in My cart</p>
-    <div *ngFor="let product of productsInCart"><div></div></div>
+    <div *ngFor="let product of productsInCart"><div>
+      {{allProductsObject[product._id].name}} : {{product.quantity}}
+    </div></div>
 
     <!--<button (click)="showFiller = !showFiller" mat-raised-button>
       Toggle extra text
