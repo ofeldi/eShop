@@ -1,6 +1,6 @@
 export interface Cart {
   msg: string;
-  _id:String;
+  _id:string;
   userId:string;
   date:any;
   isOpen:number;

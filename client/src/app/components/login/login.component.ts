@@ -30,6 +30,7 @@ private userIsLoggedIn: boolean = false;
   this.authService.loginUser(loginDetails).subscribe(data =>{
     if (data.success){
       this.authService.storeUserData(data.token,data.user);
+      this.authService.loadUserPayload();
       this.authService.loadToken();
       this.router.navigate((['dashboard']));
     }

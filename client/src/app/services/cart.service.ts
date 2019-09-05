@@ -36,4 +36,12 @@ export class CartService {
     return this.http.put<Cart>(`http://localhost:4000/api/cart/updateCartStatus/${cartId}`,product,{headers:{Authorization:token}})
   }
 
+  deleteProductFromCart(cartId,productId,token):Observable<any>{
+    return this.http.put<any>(`http://localhost:4000/api/cart/deleteProduct/${cartId}`,productId,{headers:{Authorization:token}})
+  }
+
+  deleteAllProductsFromCart(cartId,token):Observable<any>{
+    return this.http.put<any>(`http://localhost:4000/api/cart/deleteAllProducts/${cartId}`,{},{headers:{Authorization:token}})
+  }
+
 }

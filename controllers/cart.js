@@ -23,24 +23,39 @@ exports.createNewCart = (req, res) => {
         })
 };
 
+
+//Original function do not touch:
 exports.addProductToCart = (req, res) => {
-    Cart.findOneAndUpdate({_id: req.params.id}, {
-        $push: {
-            products: {
-                _id: req.body._id,
-                quantity: req.body.quantity
-/*              name: req.body.name,
-                price: req.body.price,
-                imageURL: req.body.imageURL*/
-            }
-        }
-    }, {new: true})
-        .then(() => {
-            Cart.findOne({_id: req.params.id})
-                .then((cart) => {
-                    res.json(cart)
-                })
+    Cart.findOne({
+            _id: req.params.id,
+            products: {$elemMatch: {_id: req.body._id}}
         })
+        .then(product =>{
+            if(product){
+                Cart.updateOne({_id:req.params.id,"products._id":req.body._id},{
+                    $set:{"products.$.quantity":req.body.quantity}
+                    }).then(()=>{
+                        Cart.findOne({_id:req.params.id})
+                            .then((cart)=>{
+                                res.status(200).json(cart);
+                            })
+                })
+                } else {
+        Cart.findOneAndUpdate({_id: req.params.id}, {
+            $push: {
+                products: {
+                    _id: req.body._id,
+                    quantity: req.body.quantity,
+                }
+            }
+        }, {new: true})
+            .then(() => {
+                Cart.findOne({_id: req.params.id})
+                    .then((cart) => {
+                        res.status(200).json(cart);
+                    })
+            })}
+    })
         .catch(err => {
             console.error(err);
             res.status(500).send(err);
@@ -48,22 +63,30 @@ exports.addProductToCart = (req, res) => {
 };
 
 exports.deleteProductFromCart = (req, res) => {
-    Cart.findOneAndUpdate({_id: req.params.id},
-        {
-            $pull: {
-                products: {$elemMatch: {_id: req.body.productId}}
-            }
-        },
-        {safe: true, multi: true})
-        .then(() => res.json({success: true}))
-        .catch(err => res.status(404).json({success: false}))
+    Cart.findOneAndUpdate({_id: req.params.id}, {$pull: {products: {_id:req.body._id}}})
+        .then(() => {
+            Cart.findOne({_id: req.params.id})
+                .then(cart => {
+                    res.status(200).json(cart);
+                })
+        }).catch(err=> {
+        console.error(err);
+        res.status(500).send(err)
+    })
 };
 
 exports.deleteAllProductsFromCart = (req, res) => {
     Cart.updateOne({_id: req.params.id}, {products: []},
         {safe: true, multi: true})
-        .then(() => res.json({success: true}))
-        .catch(err => res.status(404).json({success: false}))
+        .then(() => {
+            Cart.findOne({_id: req.params.id})
+                .then(cart => {
+                    res.status(200).json(cart);
+                })
+        }).catch(err=> {
+        console.error(err);
+        res.status(500).send(err)
+    })
 };
 
 exports.getCartById = (req, res) => {
@@ -110,7 +133,7 @@ exports.getCartById = (req, res) => {
 exports.getUserCartStatus = (req, res) => {
     Cart.findOne({userId: req.params.id})
         .then(cart => {
-            if (cart.length === 0) {
+            if (cart === null) {
                 return res.status(202).json({
                     status: 2,
                     msg: "no carts"

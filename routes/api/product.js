@@ -20,5 +20,10 @@ router.get('/productByName/:name',productController.getProductByName);
 // Gets a product by product id
 router.get('/getProductById/:id',productController.getProductById);
 
+//Gets all products as object
+router.get('/productsAsObjects',productController.getProductsAsObjects);
+
+//Get product/s by ontype search
+router.get('/search',productController.searchProduct);
 
 module.exports = router;

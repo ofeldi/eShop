@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   constructor(private authService:AuthService, private router:Router) { }
 
   ngOnInit() {
-    this.authService.loadToken();
+    this.authService.loadUserPayload();
   }
 
   onLogOutClick(){

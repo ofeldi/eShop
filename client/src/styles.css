@@ -1,2 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.to-right {
+  display:flex;
+  justify-content: flex-end;
+}
+
+.to-center {
+  display: flex;
+  justify-content: center;
+}
+
+.to-left{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.spacer {
+  flex-grow:1;
+}
+
+.justifier {
+  width: 100%
+}

@@ -20,6 +20,9 @@ authToken:String;
 loggedUser:User;
 currentUserData:User;
 userCart:Cart;
+currentUserToken:String;
+
+
   constructor(private http: HttpClient) { }
 
   checkUserCredentials (userCredentials):Observable<Credentials>{
@@ -44,17 +47,20 @@ userCart:Cart;
     this.loggedUser = loggedUser;
   }
 
-  loadToken(){
-   this.authToken = localStorage.getItem('id_token');
-   this.currentUserData = JSON.parse(localStorage.getItem('user'));
+  loadUserPayload(){
+    this.currentUserData = JSON.parse(localStorage.getItem('user'));
   }
 
-  isLoggedUser(){
+  loadToken(){
+   this.currentUserToken = localStorage.getItem('id_token');
+  }
+
+  isLoggedUser = () => {
   let jwtHelper = new JwtHelperService();
   if(localStorage.id_token == undefined)
     return false;
   return !jwtHelper.isTokenExpired(localStorage.id_token);
-  }
+  };
 
 
   logoutUser(){

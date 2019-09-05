@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../services/product.service";
 import { OrderService } from "../../services/order.service";
 import { AuthService } from "../../services/auth.service";
-import { CartService } from "../../services/cart.service";
 
 @Component({
   selector: 'app-home',
@@ -12,24 +11,17 @@ import { CartService } from "../../services/cart.service";
 export class HomeComponent implements OnInit {
   numOfProducts: number;
   numOfOrders:number;
-  userId: String = JSON.parse(localStorage.getItem('user')).id;
-  userToken: any = localStorage.getItem('id_token');
-  cartDate:Date;
-  isCartOpen:boolean;
-  cartStatus:String;
-  usersCartId:any;
 
   constructor(private productService: ProductService,
               private orderService: OrderService,
-              private authService: AuthService,
-              private cartService:CartService
+              private authService: AuthService
              ) {}
 
   ngOnInit() {
-    this.productService.getAllProducts().subscribe(data => {
+   /* this.productService.getAllProducts().subscribe(data => {
       this.numOfProducts = data.length;
      // console.log(this.numOfProducts);
-    });
+    });*/
 
 
     this.orderService.getAllOrders().subscribe(data =>{
@@ -37,7 +29,7 @@ export class HomeComponent implements OnInit {
 
     });
 
-    this.cartService.getUserCartStatus(this.userId, this.userToken).subscribe(data => {
+    /*this.cartService.getUserCartStatus(this.userId, this.userToken).subscribe(data => {
       if (data != null) {
        // console.log(data.cart.products);
         this.cartDate = data.date;
@@ -47,7 +39,7 @@ export class HomeComponent implements OnInit {
       };
       // @ts-ignore
       localStorage.setItem('users_cart',this.usersCartId);
-    })
+    })*/
 
   }
 }

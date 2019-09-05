@@ -1,6 +1,5 @@
 .example-container {
-  width: 100%;
-  height: 800px;
+  height: 650px;
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
@@ -12,5 +11,54 @@
 }
 
 .example-sidenav {
-  padding: 20px;
+  width: 30%;
+  padding: 20px 0 0 20px;
+}
+
+.card-footer {
+  padding: 0;
+}
+
+.row {
+  margin: auto;
+}
+
+.cart-item-img {
+  width: 100%;
+}
+
+.mat-card {
+  padding: 0;
+margin: 0 0 10px;
+}
+
+.card-img-top {
+  width: 40%;
+}
+
+.productImg {
+  padding: 22px;
+}
+
+.cartImg {
+  padding: 5px;
+}
+
+.cartItem {
+  padding: 0 29px;
+}
+
+.input-res {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.input-box {
+  padding: 0;
+}
+
+.qnt-btn {
+  padding: 0;
 }

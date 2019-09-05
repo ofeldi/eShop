@@ -5,4 +5,5 @@ export interface Product {
   imageURL: string;
   productId:String;
   _id:String;
+  quantity:Number;
 }
