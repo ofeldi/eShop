@@ -40,4 +40,7 @@ router.get('/getUserCartStatus/:id',authenticate,cartController.getUserCartStatu
 //:id = cartId
 router.put('/updateCartStatus/:id',authenticate,cartController.updateCartStatus);
 
+//Update cart total price
+router.put('/setCartTotalPrice/:id',authenticate,cartController.setCartTotalPrice);
+
 module.exports = router;

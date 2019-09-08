@@ -18,10 +18,10 @@ export class HomeComponent implements OnInit {
              ) {}
 
   ngOnInit() {
-   /* this.productService.getAllProducts().subscribe(data => {
+   this.productService.getAllProducts().subscribe(data => {
       this.numOfProducts = data.length;
      // console.log(this.numOfProducts);
-    });*/
+    });
 
 
     this.orderService.getAllOrders().subscribe(data =>{
@@ -29,17 +29,7 @@ export class HomeComponent implements OnInit {
 
     });
 
-    /*this.cartService.getUserCartStatus(this.userId, this.userToken).subscribe(data => {
-      if (data != null) {
-       // console.log(data.cart.products);
-        this.cartDate = data.date;
-        this.isCartOpen = data.isOpen;
-        this.cartStatus = data.msg + " " + data.date;
-        this.usersCartId = data.cart._id;
-      };
-      // @ts-ignore
-      localStorage.setItem('users_cart',this.usersCartId);
-    })*/
+
 
   }
 }

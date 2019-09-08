@@ -28,6 +28,9 @@ import { NgRedux,NgReduxModule,DevToolsExtension } from "ng2-redux";
 import { IAppState, rootReducer } from "./store";
 import { INITIAL_STATE } from './store';
 import { SidebarComponent } from './components/layout/sidebar/sidebar.component';
+import { OrderComponent } from './components/order/order.component';
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 
 @NgModule({
@@ -39,7 +42,8 @@ import { SidebarComponent } from './components/layout/sidebar/sidebar.component'
     LoginComponent,
     DashboardComponent,
     ShopComponent,
-    SidebarComponent
+    SidebarComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,9 @@ import { SidebarComponent } from './components/layout/sidebar/sidebar.component'
     HttpClientModule,
     MatMenuModule,
     NgReduxModule,
-    MatCardModule
+    MatCardModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

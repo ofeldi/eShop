@@ -1,0 +1,61 @@
+<button mat-button routerLink="/shop">Back To the Shop</button>
+<div *ngIf="!isLoading">
+  <div class="row" *ngFor="let cartProduct of currentCartProducts">
+    <div class="col-md-5 to-left cartItem">
+      <img class="cart-item-img" [src]="productsForCart[cartProduct._id].imageURL" alt="...">
+    </div>
+    <ul class="col-md-7 to-center">
+      <li>
+        <span>{{ cartProduct.quantity }}X</span> {{ productsForCart[cartProduct._id].name }}
+        <div>{{ productsForCart[cartProduct._id].price * cartProduct.quantity | currency: 'USD'}}</div>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <p>Total: <span>{{ totalPrice | currency: 'USD' }}</span></p>
+  </div>
+</div>
+
+<form [formGroup]="form">
+  <h4>CHECKOUT</h4>
+
+  <mat-form-field appearance="outline" class="justifier">
+    <mat-label>Street</mat-label>
+    <input matInput
+           formControlName="street"
+           id="street"
+           type="text"
+           (dblclick)="setUserAddress()"
+    >
+    <mat-error>Street is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="City" formControlName="city">
+      <mat-option *ngFor="let city of cities" [value]="city.value">
+        {{city.viewValue}}
+      </mat-option>
+    </mat-select>
+
+    <mat-error >City is required</mat-error>
+
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="justifier">
+    <mat-label>Shipping Date</mat-label>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error>Shipping date is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="justifier">
+    <mat-label>Credit Card</mat-label>
+    <input matInput
+           formControlName="creditCard"
+           id="creditCard"
+           type="number"
+    >
+    <mat-error>Credit card is required</mat-error>
+  </mat-form-field>
+</form>

@@ -19,7 +19,7 @@ export class ProductService {
   constructor(private http:HttpClient) { }
 
   getAllProducts ():Observable<any>{
-    return this.http.get<any>('http://localhost:4000/api/product/productsAsObjects')
+    return this.http.get<any>('http://localhost:4000/api/product/products')
 
   }
 getProductsByCategoryId(categoryId):Observable<Product[]>{

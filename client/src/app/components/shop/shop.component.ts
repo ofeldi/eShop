@@ -22,12 +22,11 @@ export class ShopComponent implements OnInit {
   public quantity: any;
   products:Record<string,Product>;
   totalCartPrice: any;
-  fieldValue: any;
   searchInputOn:boolean = true;
   productsForCart: Record<string,Product>;
   productsLength:Number;
   searchValue:string = "";
-
+  numOfSearchResults:Number;
 
   constructor(private authService: AuthService,
               private productService: ProductService,
@@ -52,15 +51,14 @@ export class ShopComponent implements OnInit {
 
     this.cartService.getUserCartStatus(this.userId, this.userToken).subscribe(data => {
         this.currentCartProducts = data.cart.products;
-        console.log(this.currentCartProducts);
+        console.log(data);
       this.setTotalPrice();
     });
 
     this.productService.getAllProducts().subscribe(data => {
-      this.products = data;
-      this.productsForCart = data;
+      this.convertArrayToObject(data);
       this.productsLength = Object.keys(data).length;
-      console.log("prodcts for cart: " ,this.productsForCart);
+      console.log("products for cart: " ,this.productsForCart);
       console.log("all products " , this.products);
     })
 
@@ -93,17 +91,21 @@ export class ShopComponent implements OnInit {
     const cartStatus = this.authService.userCart.isOpen;
     if (cartStatus === 0) {
       const setOpenCart = {isOpen: 1};
-      this.cartService.updateCartStatus(cartId, setOpenCart, this.userToken).subscribe(data => {
-      this.updateLocalStorage(data);
-      });
+      this.updateCartStatus(cartId,setOpenCart);
     }
-
       this.cartService.addProductToCart(cartId, addedProduct, this.userToken).subscribe(data => {
         this.updateLocalStorage(data);
         console.log(addedProduct);
         this.setTotalPrice();
       })
   };
+
+  updateCartStatus(cartId,setOpenCart){
+    this.cartService.updateCartStatus(cartId, setOpenCart, this.userToken).subscribe(data => {
+      this.updateLocalStorage(data);
+    });
+  }
+
 
   updateLocalStorage(cartData){
     this.authService.storeCartData(cartData);
@@ -132,6 +134,10 @@ export class ShopComponent implements OnInit {
       this.updateLocalStorage(data);
       this.setTotalPrice();
     });
+    if (this.currentCartProducts.length == 1){
+      const setOpenCart = {isOpen: 0};
+      this.updateCartStatus(this.cartId,setOpenCart);
+    }
 
   }
 
@@ -140,6 +146,8 @@ export class ShopComponent implements OnInit {
       console.log(data);
       this.updateLocalStorage(data);
     })
+    const setOpenCart = {isOpen: 0};
+    this.updateCartStatus(this.cartId,setOpenCart);
   }
 
   setTotalPrice(){
@@ -147,17 +155,36 @@ export class ShopComponent implements OnInit {
     for (let i=0;i<this.currentCartProducts.length;i++){
       this.totalCartPrice += this.currentCartProducts[i].quantity as any * this.productsForCart[this.currentCartProducts[i]._id as any].price;
     }
+    const totalCartPrice = {totalCartPrice : this.totalCartPrice};
+    this.cartService.setCartTotalPrice(this.cartId,totalCartPrice,this.userToken).subscribe(data =>{
+      console.log(data);
+      this.updateLocalStorage(data);
+      });
   }
+
+
   onUserSearch(searchValue){
     this.productService.searchProduct(searchValue).subscribe(data =>{
       const valueFound = data;
       const results = {};
       for (let i=0; i<valueFound.length;i++){
         results[valueFound[i]._id] = valueFound[i];
-        this.products = results;
       }
+      this.products = results;
+      this.numOfSearchResults = valueFound.length;
     })
   }
+
+  convertArrayToObject(productsArray){
+    const productsObject = {};
+    for (let i = 0; i < productsArray.length; i++) {
+      productsObject[productsArray[i]._id] = productsArray[i];
+    }
+  this.products = productsObject;
+    this.productsForCart = productsObject;
+  }
+
+
 
 }
 

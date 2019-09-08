@@ -6,6 +6,8 @@
     <span class="spacer"></span>
     <form *ngIf="searchInputOn">
       <input matInput type="text"
+             name="searValue"
+             [(ngModel)]="searchValue"
              placeholder="Search Product"
              [value]="searchValue"
              (keyup)="onUserSearch($event.target.value)">
@@ -48,6 +50,9 @@
   </mat-drawer>
 
   <div *ngIf="!ProductsByCategory">
+
+    <span *ngIf="searchValue && !numOfSearchResults">No products found</span>
+    <span *ngIf="searchValue && numOfSearchResults !==0">Results: {{numOfSearchResults}}</span>
     <div class="row">
       <mat-card class="col-lg-2 col-md-4 col-md-6" *ngFor="let item of products | keyvalue">
         <div class="to-center productImage">

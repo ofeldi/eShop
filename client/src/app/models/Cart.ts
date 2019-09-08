@@ -7,4 +7,5 @@ export interface Cart {
   products:[];
   status: number;
   cart:Cart;
+  totalCartPrice:number;
 }

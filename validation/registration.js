@@ -1,6 +1,7 @@
 const Validator = require('validator');
 const isEmpty = require('./is-empty');
 
+
 module.exports = function validateRegistration(data) {
     let errors = {};
 
@@ -33,6 +34,10 @@ module.exports = function validateRegistration(data) {
 
     // First Name Validation
 
+    if (!data.firstName.match(/^[a-zA-Z ]+$/)){
+        errors.firstName = 'First Name must letters only';
+    }
+
     if (!Validator.isLength(data.firstName, {min: 2, max: 30})) {
         errors.firstName = 'First Name must be between 2 and 30 characters';
     }
@@ -45,6 +50,10 @@ module.exports = function validateRegistration(data) {
 
     if (!Validator.isLength(data.lastName, {min: 2, max: 30})) {
         errors.lastName = 'Last Name must be between 2 and 30 characters';
+    }
+
+    if (!data.lastName.match(/^[a-zA-Z ]+$/)){
+        errors.lastName = 'Last Name must letters only';
     }
 
     if (Validator.isEmpty(data.lastName)) {
