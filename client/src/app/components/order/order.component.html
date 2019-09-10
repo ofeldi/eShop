@@ -1,12 +1,23 @@
 <button mat-button routerLink="/shop">Back To the Shop</button>
-<div *ngIf="!isLoading">
+<form>
+ <input autocomplete="off" type="search" name="searchValue" placeholder="Search"
+        [(ngModel)]="searchValue">
+</form>
+
+
+
+<div name="searchText" *ngIf="!isLoading">
   <div class="row" *ngFor="let cartProduct of currentCartProducts">
     <div class="col-md-5 to-left cartItem">
       <img class="cart-item-img" [src]="productsForCart[cartProduct._id].imageURL" alt="...">
     </div>
     <ul class="col-md-7 to-center">
       <li>
-        <span>{{ cartProduct.quantity }}X</span> {{ productsForCart[cartProduct._id].name }}
+        <span>{{ cartProduct.quantity }} X </span>
+        <span ngxTextHighlight
+              [content]="productsForCart[cartProduct._id].name"
+              [searchTerm]="searchValue"
+              [caseSensitive]="false"></span>
         <div>{{ productsForCart[cartProduct._id].price * cartProduct.quantity | currency: 'USD'}}</div>
       </li>
     </ul>
@@ -16,7 +27,7 @@
   </div>
 </div>
 
-<form [formGroup]="form">
+<form [formGroup]="orderForm"  (ngSubmit)="onOrderSubmit()" >
   <h4>CHECKOUT</h4>
 
   <mat-form-field appearance="outline" class="justifier">
@@ -27,7 +38,9 @@
            type="text"
            (dblclick)="setUserAddress()"
     >
-    <mat-error>Street is required</mat-error>
+    <mat-error *ngIf="orderForm.get('street').errors?.serverError">
+      {{ orderForm.get('street').errors?.serverError}}
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field>
@@ -37,16 +50,21 @@
       </mat-option>
     </mat-select>
 
-    <mat-error >City is required</mat-error>
+    <mat-error *ngIf="orderForm.get('city').errors?.serverError">
+      {{ orderForm.get('city').errors?.serverError}}
+    </mat-error>
 
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="justifier">
     <mat-label>Shipping Date</mat-label>
-    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+    <input matInput [matDatepicker]="picker" formControlName="deliveryDate"
+           placeholder="Choose a date">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-error>Shipping date is required</mat-error>
+    <mat-error *ngIf="orderForm.get('deliveryDate').errors?.serverError">
+      {{ orderForm.get('deliveryDate').errors?.serverError}}
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="justifier">
@@ -54,8 +72,14 @@
     <input matInput
            formControlName="creditCard"
            id="creditCard"
-           type="number"
+           type="text"
     >
-    <mat-error>Credit card is required</mat-error>
+    <mat-error *ngIf="orderForm.get('creditCard').errors?.serverError">
+      {{ orderForm.get('creditCard').errors?.serverError}}
+    </mat-error>
   </mat-form-field>
+
+  <button mat-button type="submit">Submit order</button>
 </form>
+
+

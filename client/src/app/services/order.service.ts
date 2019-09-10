@@ -21,5 +21,8 @@ export class OrderService {
     return this.http.get<Order[]>('http://localhost:4000/api/order/orders')
   }
 
+  createNewOrder(order,token):Observable<any> {
+    return this.http.post<any>('http://localhost:4000/api/order/createNewOrder',order,{headers:{Authorization:token}})
+  }
 
 }

@@ -25,6 +25,7 @@
     "@auth0/angular-jwt": "^3.0.0",
     "hammerjs": "^2.0.8",
     "ng2-redux": "^5.1.2",
+    "ngx-text-highlight": "^0.1.6",
     "redux": "^4.0.4",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.2",

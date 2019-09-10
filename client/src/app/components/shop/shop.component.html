@@ -46,7 +46,7 @@
         <p>Total<span> {{totalCartPrice | currency:"USD"}}  </span></p>
       </div>
     </div>
-    <a href="#0" class="checkout-btn">Checkout</a>
+    <button mat-button routerLink="/order" class="checkout-btn">Checkout</button>
   </mat-drawer>
 
   <div *ngIf="!ProductsByCategory">

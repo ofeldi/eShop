@@ -31,6 +31,7 @@ import { SidebarComponent } from './components/layout/sidebar/sidebar.component'
 import { OrderComponent } from './components/order/order.component';
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import { NgHighlightModule } from 'ngx-text-highlight';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     NgReduxModule,
     MatCardModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    NgHighlightModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
