@@ -3,7 +3,7 @@
     <form (ngSubmit)="onFirstStepSubmit()" [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Fill in your details Step 1</ng-template>
       <mat-form-field>
-      <input matInput placeholder="Identity Number" formControlName="identityNumber"
+      <input matInput placeholder="Identity Number" formControlName="identityNumber" type="number"
       (keydown)="allowNumberOnly($event)"
              (paste)="preventPaste($event)">
           <mat-error *ngIf="firstFormGroup.get('identityNumber').errors?.serverError">

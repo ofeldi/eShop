@@ -54,8 +54,17 @@ export class SignupComponent implements OnInit {
   ];
 
   onFirstStepSubmit() {
-    console.log(this.firstFormGroup.getRawValue());
-    const credentials = this.firstFormGroup.getRawValue();
+
+    const signUpDetails = this.firstFormGroup.getRawValue();
+    const identityNumber = signUpDetails.identityNumber.toString();
+
+    const credentials = {
+      identityNumber : identityNumber,
+      email: signUpDetails.email,
+      password: signUpDetails.password,
+      password2: signUpDetails.password2
+    };
+
     this.authService.checkUserCredentials(credentials).subscribe((data) => {
       if (data.userChecked) {
         this.formIsValid = true;
@@ -79,9 +88,10 @@ export class SignupComponent implements OnInit {
   onSecondStepSubmit() {
     const credentials = this.firstFormGroup.getRawValue();
     const shippingDetails = this.secondFormGroup.getRawValue();
+    const identityNumber = credentials.identityNumber.toString();
     const user = {
       email: credentials.email,
-      identityNumber: credentials.identityNumber,
+      identityNumber: identityNumber,
       password: credentials.password,
       lastName: shippingDetails.lastName,
       firstName: shippingDetails.firstName,

@@ -8,12 +8,15 @@ const authenticate = passport.authenticate('jwt',{session:false});
 // Gets the user's address
 // :id = userId
 
-router.get('/userShippingDetails/:id',authenticate,orderController.getUserShippingDetails);
+//router.get('/userShippingDetails/:id',authenticate,orderController.getUserShippingDetails);
 
 //Gets all order in the system
 router.get('/orders',orderController.getOrders);
 
 //Creates new order while checking the delivery date is available
 router.post('/createNewOrder',authenticate,orderController.createNewOrder);
+
+//Get all occupied dates
+router.get('/getOccupiedDates', authenticate,orderController.getOccupiedDates);
 
 module.exports = router;

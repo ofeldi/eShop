@@ -27,6 +27,7 @@ export class ShopComponent implements OnInit {
   productsLength:Number;
   searchValue:string = "";
   numOfSearchResults:Number;
+  isLoading:Boolean = true;
 
   constructor(private authService: AuthService,
               private productService: ProductService,
@@ -53,6 +54,7 @@ export class ShopComponent implements OnInit {
         this.currentCartProducts = data.cart.products;
         console.log(data);
       this.setTotalPrice();
+
     });
 
     this.productService.getAllProducts().subscribe(data => {

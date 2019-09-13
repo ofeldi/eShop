@@ -8,6 +8,8 @@ import {FormGroup, FormControl, Validators} from "@angular/forms";
 import { OrderService } from "../../services/order.service";
 import {DatePipe} from "@angular/common";
 import {Cart} from "../../models/Cart";
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-order',
@@ -24,6 +26,9 @@ export class OrderComponent implements OnInit {
   orderForm: FormGroup;
   public searchValue:string;
   currentCart:Cart;
+  occupiedDates:any = [];
+  minDate:Date = new Date();
+  totalCartProductsQuantity:Number;
 
 
   cities: city[] = [
@@ -39,13 +44,14 @@ export class OrderComponent implements OnInit {
     {value: 'Eilat-9', viewValue: 'Eilat'},
   ];
 
-  public currentCartProducts: Product[];
+   currentCartProducts: Product[];
 
   constructor(
     private authService: AuthService,
     private productService: ProductService,
     private cartService: CartService,
     private orderService: OrderService,
+    private router:Router,
   ) {
 
   }
@@ -71,6 +77,10 @@ export class OrderComponent implements OnInit {
       deliveryDate: new FormControl('', Validators.required),
       creditCard: new FormControl('', Validators.required)
     })
+
+    this.getOccupiedDates();
+
+    this.setTotalCartProductsQuantity();
   }
 
   getAllProducts() {
@@ -96,7 +106,7 @@ export class OrderComponent implements OnInit {
 
   onOrderSubmit() {
     const orderDetails = this.orderForm.getRawValue();
-    const creditCard = orderDetails.creditCard;
+    const creditCard = orderDetails.creditCard.toString();
     const deliveryDate = new DatePipe('en').transform(orderDetails.deliveryDate, 'yyyy/MM/dd');
     console.log(creditCard, deliveryDate);
 
@@ -113,8 +123,16 @@ export class OrderComponent implements OnInit {
       cart:this.currentCart,
     };
     console.log(this.cartId);
+
     this.orderService.createNewOrder(order, this.userToken).subscribe(data => {
       console.log(data);
+      if (data.success) {
+        const userId = {userId : this.userId};
+        this.cartService.createNewCart(userId,this.userToken).subscribe(data=>{
+          this.authService.storeCartData(data.cart);
+        });
+        this.router.navigate(['dashboard']);
+      }
     }, err => {
       if (err.status === 400) {
         Object.keys(err.error).forEach(prop => {
@@ -128,6 +146,27 @@ export class OrderComponent implements OnInit {
       }
     });
     console.log(orderDetails);
+  }
+
+  getOccupiedDates(){
+    this.orderService.getOccupiedDates(this.userToken).subscribe(data=>{
+      this.occupiedDates = data.map(obj=> new Date(obj.date).getTime());
+    })
+  }
+
+  myFilter = (d: Date):boolean =>{
+    const day: any = d.getDay();
+    return (!this.occupiedDates.includes(d.valueOf()));
+  };
+
+  dateClass = (d:Date) =>{
+    const day:any = d.getDate();
+    return (this.occupiedDates.includes(d.valueOf())) ? 'occupied-date-class': undefined
+  }
+
+  setTotalCartProductsQuantity(){
+    const cartProductsQuantityArr = this.currentCartProducts.map(obj=> obj.quantity);
+    this.totalCartProductsQuantity = cartProductsQuantityArr.reduce((a, b) => a + b, 0)
   }
 
 }

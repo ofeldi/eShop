@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
   userId: String;
   userToken:String;
   cartStatus:String;
-
+  isLoading:Boolean = true;
 
   constructor(private productService: ProductService,
               private authService: AuthService,
@@ -47,7 +47,11 @@ export class DashboardComponent implements OnInit {
 
     this.productService.getAllProducts().subscribe(data =>{
       this.numOfProducts = Object.keys(data).length;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 300)
     })
+
   }
 
   capFirstLetter(string){

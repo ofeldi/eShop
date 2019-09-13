@@ -8,6 +8,7 @@
 
 <div name="searchText" *ngIf="!isLoading">
   <div class="row" *ngFor="let cartProduct of currentCartProducts">
+    <div>Products in Cart: {{totalCartProductsQuantity}}</div>
     <div class="col-md-5 to-left cartItem">
       <img class="cart-item-img" [src]="productsForCart[cartProduct._id].imageURL" alt="...">
     </div>
@@ -58,10 +59,11 @@
 
   <mat-form-field appearance="outline" class="justifier">
     <mat-label>Shipping Date</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="deliveryDate"
-           placeholder="Choose a date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <input matInput readonly [matDatepicker]="deliveryDate" placeholder="Select a delivery date"
+           formControlName="deliveryDate" [min]="minDate">
+    <mat-datepicker-toggle matSuffix [for]="deliveryDate"></mat-datepicker-toggle>
+    <mat-datepicker #deliveryDate touchUi [dateClass]="dateClass" ></mat-datepicker>
+
     <mat-error *ngIf="orderForm.get('deliveryDate').errors?.serverError">
       {{ orderForm.get('deliveryDate').errors?.serverError}}
     </mat-error>
@@ -72,7 +74,7 @@
     <input matInput
            formControlName="creditCard"
            id="creditCard"
-           type="text"
+           type="number"
     >
     <mat-error *ngIf="orderForm.get('creditCard').errors?.serverError">
       {{ orderForm.get('creditCard').errors?.serverError}}

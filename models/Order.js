@@ -32,8 +32,13 @@ const OrderSchema = new Schema({
         required: true
     },
     creditCard: {
-        type: Number,
+        type: String,
         required: true
+    },
+    Products:[{_id:String,quantity:Number}],
+
+    cart:{
+        type:{}
     }
 });
 

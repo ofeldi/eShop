@@ -23,3 +23,13 @@
 .justifier {
   width: 100%
 }
+
+
+.occupied-date-class {
+  background: red;
+  border-radius: 100%;
+}
+
+.mat-calendar-body-disabled>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+  color: black;
+}

@@ -1,3 +1,4 @@
+<div *ngIf="!isLoading">
 <div>dashboard</div>
 <!--set go the shop as ngIf cart is opened-->
 <div>Welcome:
@@ -6,3 +7,4 @@
 <button mat-menu-item routerLink="/shop">Shop</button>
 <h1>Num of products in the shop: {{numOfProducts}}</h1>
 <div>{{cartStatus}}</div>
+</div>
