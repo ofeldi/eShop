@@ -1,0 +1,86 @@
+<button (click)="captureScreen()">PDF</button>
+<div class="container" id="contentToConvert">
+  <div class="row">
+
+
+    <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+      <div class="row">
+      </div>
+      <div class="row">
+        <div class="receipt-header receipt-header-mid">
+          <div class="col-xs-8 col-sm-8 col-md-8 text-left">
+            <div class="receipt-right">
+              <h2>eShop</h2>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="receipt-left">
+              <h3>Receipt</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th class="col-md-9">Description</th>
+            <th class="col-md-9">Unit</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let invoice of currentCartProducts">
+            <td class="col-md-9">{{capFirstLetter(productsForCart[invoice._id].name)}}</td>
+            <td class="col-md-9">{{(productsForCart[invoice._id].price) | currency: 'USD'}}</td>
+            <td class="col-md-6"><i class="fa fa-inr"></i>{{invoice.quantity}}</td>
+            <td class="col-md-6"><i class="fa fa-inr"></i>{{productsForCart[invoice._id].price * invoice.quantity | currency: 'USD' }}</td>
+          </tr>
+          <tr>
+            <td class="text-left">
+              <p><strong>Sum of Quantity:</strong></p>
+              </td><td></td>
+            <td><p><strong>{{totalCartProductsQuantity}}</strong></p></td><td></td>
+
+          </tr>
+          <tr>
+            <td class="text-left" colspan="3"><p>TAX %</p>
+            <p>Price before tax</p>
+            <p>Tax</p>
+            </td>
+
+            <td class="text-left" colspan="3"><p>17%</p>
+            <p>{{totalPrice * 0.83 | currency: 'USD' }}</p>
+              <p>{{totalPrice * 0.17 | currency: 'USD' }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-left" colspan="3"><h2><strong>Total: </strong></h2></td>
+            <td class="text-left text-danger"><h2><strong><i class="fa fa-inr"></i> {{ totalPrice | currency: 'USD' }}</strong></h2></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <div class="receipt-header receipt-header-mid receipt-footer">
+          <div class="col-xs-8 col-sm-8 col-md-8 text-left">
+            <div class="receipt-right">
+              <p><b>Order date: {{oderDate}}</b> </p>
+              <p><b>Delivery date: {{deliveryDate}}</b> </p>
+              <h5 style="color: rgb(140, 140, 140);">Thank you for your business!</h5>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="receipt-left">
+              <h1>Signature</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

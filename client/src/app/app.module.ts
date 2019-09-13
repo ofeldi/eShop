@@ -32,6 +32,7 @@ import { OrderComponent } from './components/order/order.component';
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { NgHighlightModule } from 'ngx-text-highlight';
+import { InvoiceComponent } from './components/invoice/invoice.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { NgHighlightModule } from 'ngx-text-highlight';
     DashboardComponent,
     ShopComponent,
     SidebarComponent,
-    OrderComponent
+    OrderComponent,
+    InvoiceComponent
   ],
   imports: [
     BrowserModule,

@@ -31,6 +31,8 @@ export class OrderComponent implements OnInit {
   totalCartProductsQuantity:Number;
 
 
+
+
   cities: city[] = [
     {value: 'Tel Aviv-0', viewValue: 'Tel Aviv'},
     {value: 'Haifa-1', viewValue: 'Haifa'},
@@ -131,7 +133,7 @@ export class OrderComponent implements OnInit {
         this.cartService.createNewCart(userId,this.userToken).subscribe(data=>{
           this.authService.storeCartData(data.cart);
         });
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['invoice']);
       }
     }, err => {
       if (err.status === 400) {
@@ -146,6 +148,12 @@ export class OrderComponent implements OnInit {
       }
     });
     console.log(orderDetails);
+
+
+
+    // @ts-ignore
+    localStorage.setItem("order_date",new DatePipe('en').transform(new Date(), 'yyyy/MM/dd'));
+    localStorage.setItem("delivery_date",deliveryDate)
   }
 
   getOccupiedDates(){
