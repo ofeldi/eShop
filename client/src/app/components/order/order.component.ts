@@ -152,8 +152,8 @@ export class OrderComponent implements OnInit {
 
 
     // @ts-ignore
-    localStorage.setItem("order_date",new DatePipe('en').transform(new Date(), 'yyyy/MM/dd'));
-    localStorage.setItem("delivery_date",deliveryDate)
+    localStorage.setItem("order_date",new DatePipe('en').transform(new Date(), 'dd/MM/yyyy'));
+    localStorage.setItem("delivery_date",new DatePipe('en').transform(deliveryDate, 'dd/MM/yyyy'))
   }
 
   getOccupiedDates(){

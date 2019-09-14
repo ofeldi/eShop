@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService } from "../../services/product.service";
 import { AuthService } from "../../services/auth.service";
 import { CartService } from "../../services/cart.service";
+import { OrderService } from "../../services/order.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-dashboard',
@@ -14,10 +16,12 @@ export class DashboardComponent implements OnInit {
   userToken:String;
   cartStatus:String;
   isLoading:Boolean = true;
+  dashBoarMsg:any;
 
   constructor(private productService: ProductService,
               private authService: AuthService,
-              private cartService: CartService
+              private cartService: CartService,
+              private orderService: OrderService
               ) { }
 
   ngOnInit() {
@@ -28,19 +32,29 @@ export class DashboardComponent implements OnInit {
     this.userToken = this.authService.currentUserToken;
 
     this.cartService.getUserCartStatus(this.userId, this.userToken).subscribe(data => {
-        if (data.status ===0){
+
+      if (data.status ===0){
           console.log(data);
           this.authService.storeCartData(data.cart);
+          this.orderService.getLatestOrderByUserId(this.userId,this.userToken).subscribe(data=>{
+            if (data[0])  {
+              this.dashBoarMsg = "Welcome back, no cart found. Last order date: " + (data[0].orderDate,new DatePipe('en').transform(new Date(), 'dd/MM/yyyy'));
+            } else {
+              this.dashBoarMsg = "Welcome to our shop, Enjoy your first buy"
+            }
+          })
           return;
         }
         if (data.status === 1){
-          console.log(data);
+         // console.log(data);
           this.authService.storeCartData(data.cart);
+          this.dashBoarMsg = "You have an opened cart from: " + (data.cart.date,new DatePipe('en').transform(new Date(), 'dd/MM/yyyy'));
           return;
         } else {
           const userId = {userId : this.userId};
           this.cartService.createNewCart(userId,this.userToken).subscribe(data=>{
             this.authService.storeCartData(data.cart);
+            this.dashBoarMsg = "Welcome to our shop, Enjoy your first buy ♥"
           });
         }
     });
@@ -51,6 +65,9 @@ export class DashboardComponent implements OnInit {
         this.isLoading = false;
       }, 300)
     })
+
+
+
 
   }
 

@@ -28,5 +28,9 @@ export class OrderService {
   getOccupiedDates(token):Observable<any>{
     return this.http.get<any>('http://localhost:4000/api/order/getOccupiedDates',{headers:{Authorization:token}})
   }
+  getLatestOrderByUserId(userId,token):Observable<Order>{
+    return this.http.get<Order>(`http://localhost:4000/api/order/getLatestOrderByUserId/${userId}`,{headers:{Authorization:token}})
+  }
+
 
 }
