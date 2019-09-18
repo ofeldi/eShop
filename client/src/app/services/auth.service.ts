@@ -39,6 +39,10 @@ currentUserToken:String;
     return this.http.post<Credentials>('http://localhost:4000/api/user/login',loginDetails,httpOptions);
   }
 
+  checkIfUserAdmin(userId):Observable<User>{
+    return this.http.get<User>(`http://localhost:4000/api/user/checkIfUserAdmin/${userId}`);
+  }
+
   storeUserData(token,loggedUser){
     localStorage.setItem('id_token',token);
     console.log(loggedUser);
@@ -76,4 +80,8 @@ localStorage.setItem('cart',JSON.stringify(currentUserCart));
   loadUserCart (){
     this.userCart = JSON.parse(localStorage.getItem('cart'));
   }
+
+
+
+
 }

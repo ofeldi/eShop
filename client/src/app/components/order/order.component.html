@@ -1,4 +1,6 @@
 <button mat-button routerLink="/shop">Back To the Shop</button>
+
+<div *ngIf="totalPrice > 0">
 <form>
  <input autocomplete="off" type="search" name="searchValue" placeholder="Search"
         [(ngModel)]="searchValue">
@@ -85,3 +87,4 @@
 </form>
 
 
+</div>

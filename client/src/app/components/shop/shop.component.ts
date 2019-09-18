@@ -92,7 +92,7 @@ export class ShopComponent implements OnInit {
     const cartId = this.cartId;
     const cartStatus = this.authService.userCart.isOpen;
     if (cartStatus === 0) {
-      const setOpenCart = {isOpen: 1};
+      const setOpenCart = {isOpen: 1, date: new Date()};
       this.updateCartStatus(cartId,setOpenCart);
     }
       this.cartService.addProductToCart(cartId, addedProduct, this.userToken).subscribe(data => {
@@ -150,6 +150,7 @@ export class ShopComponent implements OnInit {
     })
     const setOpenCart = {isOpen: 0};
     this.updateCartStatus(this.cartId,setOpenCart);
+
   }
 
   setTotalPrice(){

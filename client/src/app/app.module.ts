@@ -6,6 +6,7 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AuthGuard } from "./gurds/auth.gurd";
 
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -33,6 +34,8 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { NgHighlightModule } from 'ngx-text-highlight';
 import { InvoiceComponent } from './components/invoice/invoice.component';
+import { NotFoundComponent } from './components/layout/not-found/not-found.component';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
 
 
 @NgModule({
@@ -46,7 +49,9 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
     ShopComponent,
     SidebarComponent,
     OrderComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    NotFoundComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,

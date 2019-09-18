@@ -28,7 +28,13 @@ private userIsLoggedIn: boolean = false;
   const loginDetails = this.loginForm.getRawValue();
 
   this.authService.loginUser(loginDetails).subscribe(data =>{
-    if (data.success){
+    if (data.user.isAdmin){
+      this.authService.storeUserData(data.token,data.user);
+      this.authService.loadUserPayload();
+      this.router.navigate((['admin']));
+    }
+
+    if (data.success && !data.user.isAdmin){
       this.authService.storeUserData(data.token,data.user);
       this.authService.loadUserPayload();
       this.authService.loadToken();

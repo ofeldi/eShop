@@ -110,7 +110,7 @@ export class OrderComponent implements OnInit {
     const orderDetails = this.orderForm.getRawValue();
     const creditCard = orderDetails.creditCard.toString();
     const deliveryDate = new DatePipe('en').transform(orderDetails.deliveryDate, 'yyyy/MM/dd');
-    console.log(creditCard, deliveryDate);
+    //console.log(creditCard, deliveryDate);
 
 
     const order = {
@@ -134,6 +134,7 @@ export class OrderComponent implements OnInit {
           this.authService.storeCartData(data.cart);
         });
         this.router.navigate(['invoice']);
+        localStorage.setItem('clone_cart',localStorage.getItem('cart'))
       }
     }, err => {
       if (err.status === 400) {

@@ -32,23 +32,23 @@ export class DashboardComponent implements OnInit {
     this.userToken = this.authService.currentUserToken;
 
     this.cartService.getUserCartStatus(this.userId, this.userToken).subscribe(data => {
-
+      console.log(data.msg);
       if (data.status ===0){
-          console.log(data);
+
           this.authService.storeCartData(data.cart);
-          this.orderService.getLatestOrderByUserId(this.userId,this.userToken).subscribe(data=>{
-            if (data[0])  {
-              this.dashBoarMsg = "Welcome back, no cart found. Last order date: " + (data[0].orderDate,new DatePipe('en').transform(new Date(), 'dd/MM/yyyy'));
+          this.orderService.getLatestOrderByUserId(this.userId,this.userToken).subscribe(date=>{
+            console.log(date[0])
+            if (date[0])  {
+              this.dashBoarMsg = "Welcome back, no opened carts were found. Your last order's date is: " + (new DatePipe ("en").transform(date[0].orderDate,"dd/MM/yyyy"));
             } else {
-              this.dashBoarMsg = "Welcome to our shop, Enjoy your first buy"
+              this.dashBoarMsg = "Welcome to our shop, Enjoy your first buy ♥"
             }
           })
           return;
         }
         if (data.status === 1){
-         // console.log(data);
           this.authService.storeCartData(data.cart);
-          this.dashBoarMsg = "You have an opened cart from: " + (data.cart.date,new DatePipe('en').transform(new Date(), 'dd/MM/yyyy'));
+          this.dashBoarMsg = "You have an opened cart from" + (new DatePipe ("en").transform(data.msg,"dd/MM/yyyy"));
           return;
         } else {
           const userId = {userId : this.userId};

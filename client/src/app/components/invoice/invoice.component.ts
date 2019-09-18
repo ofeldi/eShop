@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import {AuthService} from "../../services/auth.service";
@@ -12,7 +12,7 @@ import {OrderService} from "../../services/order.service";
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.css']
 })
-export class InvoiceComponent implements OnInit {
+export class InvoiceComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   totalCartProductsQuantity: Number;
   currentCartProducts: Product[];
@@ -24,19 +24,24 @@ export class InvoiceComponent implements OnInit {
   constructor(private authService: AuthService,
               private productService: ProductService,
               private orderService:OrderService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.authService.loadUserCart();
     this.getAllProducts();
 
-    this.currentCartProducts = this.authService.userCart.products;
-    this.totalPrice = this.authService.userCart.totalCartPrice;
+    this.currentCartProducts =  (JSON.parse(localStorage.getItem('clone_cart'))).products     //this.authService.userCart.products;
+    this.totalPrice = (JSON.parse(localStorage.getItem('clone_cart'))).totalCartPrice// this.authService.userCart.totalCartPrice;
 
     this.setTotalCartProductsQuantity();
 
+    console.log(JSON.parse(localStorage.getItem('clone_cart')))
   }
+
+  ngOnDestroy(){
+
+  }
+
 
   public captureScreen() {
     const data = document.getElementById('contentToConvert');
