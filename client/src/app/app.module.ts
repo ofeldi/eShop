@@ -5,17 +5,19 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AuthGuard } from "./gurds/auth.gurd";
+import { AdminGuard } from './gurds/adminGuard';
 
-
+import { MyMaterialModule } from  './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatCardModule, MatInputModule, MatMenuModule, MatSelectModule} from "@angular/material";
 import { MatFormFieldModule, MatToolbarModule } from "@angular/material";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
@@ -36,6 +38,10 @@ import { NgHighlightModule } from 'ngx-text-highlight';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { NotFoundComponent } from './components/layout/not-found/not-found.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
+import { EditModalComponent } from './components/admin-page/edit-modal/edit-modal.component';
+import { AddModalComponent } from './components/admin-page/add-modal/add-modal.component';
+
+
 
 
 @NgModule({
@@ -51,7 +57,9 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
     OrderComponent,
     InvoiceComponent,
     NotFoundComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    EditModalComponent,
+    AddModalComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +70,6 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
     MatIconModule,
     MatSidenavModule,
     MatToolbarModule,
-    FlexLayoutModule,
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
@@ -75,9 +82,16 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
     MatCardModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    NgHighlightModule
+    MatProgressBarModule,
+    NgHighlightModule,
+    MyMaterialModule,
+    FlexLayoutModule
   ],
-  providers: [AuthGuard],
+  entryComponents:[
+    EditModalComponent,
+    AddModalComponent
+  ],
+  providers: [AuthGuard,AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

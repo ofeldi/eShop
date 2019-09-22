@@ -1,1 +1,26 @@
-<p>admin-page works!</p>
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<div *ngIf="!isLoading" class="table-responsive">
+  <button mat-button (click)="openAddDialog(categories)">Add Product</button>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Category</th>
+      <th scope="col">Actions</th>
+      <th scope="col">Photo</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+     <th scope="row">{{ product._id }}</th>
+      <td>{{capFirstLetter(product.name)}}</td>
+        <td>{{product.price |currency:'USD'}}</td>
+        <td>{{categories[product.categoryId].name}}</td>
+        <td><button mat-button (click)="openeEditDialog(product,categories)">Edit</button></td>
+      <td> <img src="{{product.imageURL}}" alt=".."></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

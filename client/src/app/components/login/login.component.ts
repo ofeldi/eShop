@@ -18,6 +18,10 @@ private userIsLoggedIn: boolean = false;
   ) { }
 
   ngOnInit() {
+    if(this.authService.isLoggedUser()){
+      this.router.navigate(['dashboard'])
+    }
+
    this.loginForm = this.formBuilder.group({
      email:['',Validators.required],
      password:['',Validators.required]
@@ -28,13 +32,13 @@ private userIsLoggedIn: boolean = false;
   const loginDetails = this.loginForm.getRawValue();
 
   this.authService.loginUser(loginDetails).subscribe(data =>{
-    if (data.user.isAdmin){
-      this.authService.storeUserData(data.token,data.user);
+    if (data.admin){
+      this.authService.storeUserData(data.token,data.admin);
       this.authService.loadUserPayload();
       this.router.navigate((['admin']));
     }
 
-    if (data.success && !data.user.isAdmin){
+    if (data.success){
       this.authService.storeUserData(data.token,data.user);
       this.authService.loadUserPayload();
       this.authService.loadToken();

@@ -10,5 +10,6 @@ export interface Credentials{
   //login credentials
   success:boolean;
   token:String;
-  user:User
+  user:User;
+  admin:User
 }

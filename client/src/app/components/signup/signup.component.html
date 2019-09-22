@@ -1,9 +1,11 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
-    <form (ngSubmit)="onFirstStepSubmit()" [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Fill in your details Step 1</ng-template>
-      <mat-form-field>
-      <input matInput placeholder="Identity Number" formControlName="identityNumber" type="number"
+    <form class="example-form" (ngSubmit)="onFirstStepSubmit()" [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>First Step</ng-template>
+      <mat-form-field class="example-full-width">
+      <input matInput placeholder="Identity Number 9 Digits" formControlName="identityNumber" min=0 type="number"
       (keydown)="allowNumberOnly($event)"
              (paste)="preventPaste($event)">
           <mat-error *ngIf="firstFormGroup.get('identityNumber').errors?.serverError">
@@ -11,7 +13,7 @@
           </mat-error>
       </mat-form-field>
       <div>
-        <mat-form-field>
+        <mat-form-field class="example-full-width">
         <input matInput placeholder="em@il" formControlName="email">
           <mat-error *ngIf="firstFormGroup.get('email').errors?.serverError">
             {{ firstFormGroup.get('email').errors?.serverError}}
@@ -19,14 +21,14 @@
       </mat-form-field>
         </div>
       <div>
-        <mat-form-field>
+        <mat-form-field class="example-full-width">
         <input type="password" matInput placeholder="Password" formControlName="password">
           <mat-error *ngIf="firstFormGroup.get('password').errors?.serverError">
             {{ firstFormGroup.get('password').errors?.serverError}}
           </mat-error>
       </mat-form-field>
         </div>
-      <mat-form-field>
+      <mat-form-field class="example-full-width">
         <input type="password" matInput placeholder="Confirm Password" formControlName="password2">
         <mat-error *ngIf="firstFormGroup.get('password2').errors?.serverError">
           {{ firstFormGroup.get('password2').errors?.serverError}}
@@ -39,7 +41,7 @@
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
     <form (ngSubmit)="onSecondStepSubmit()" [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Fill in your details Step 2</ng-template>
+      <ng-template matStepLabel>Second Step</ng-template>
       <mat-form-field>
         <input matInput placeholder="First Name" formControlName="firstName">
         <mat-error *ngIf="secondFormGroup.get('firstName').errors?.serverError">
@@ -50,7 +52,7 @@
         </mat-error>
       </mat-form-field>
       <div>
-        <mat-form-field>
+        <mat-form-field class="example-full-width">
           <input matInput placeholder="Last Name" formControlName="lastName">
           <mat-error *ngIf="secondFormGroup.get('lastName').errors?.serverError">
             {{ secondFormGroup.get('lastName').errors?.serverError}}
@@ -61,7 +63,7 @@
         </mat-form-field>
       </div>
 <div>
-  <mat-form-field>
+  <mat-form-field class="example-full-width">
     <mat-select placeholder="City" formControlName="city">
       <mat-option *ngFor="let city of city" [value]="city.value">
         {{city.viewValue}}
@@ -73,7 +75,7 @@
   </mat-form-field>
 </div>
       <div>
-        <mat-form-field>
+        <mat-form-field class="example-full-width">
           <input matInput placeholder="Street" formControlName="street" >
           <mat-error *ngIf="secondFormGroup.get('street').errors?.serverError">
             {{ secondFormGroup.get('street').errors?.serverError}}
@@ -87,3 +89,5 @@
     </form>
   </mat-step>
 </mat-horizontal-stepper>
+    </mat-card>
+</div>

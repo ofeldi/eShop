@@ -37,7 +37,7 @@ export class ShopComponent implements OnInit {
   }
 
   ngOnInit() {
-
+console.log(this.currentCartProducts);
     console.log(JSON.parse(localStorage.getItem('cart')));
     this.authService.loadUserPayload();
     this.authService.loadUserCart();
@@ -53,7 +53,7 @@ export class ShopComponent implements OnInit {
     this.cartService.getUserCartStatus(this.userId, this.userToken).subscribe(data => {
         this.currentCartProducts = data.cart.products;
         console.log(data);
-      this.setTotalPrice();
+        this.setTotalPrice();
 
     });
 
@@ -185,9 +185,19 @@ export class ShopComponent implements OnInit {
     }
   this.products = productsObject;
     this.productsForCart = productsObject;
+
   }
 
+  capFirstLetter(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
+  allowNumberOnly(e){
+    const code = (e.which) ? e.which : e.keycode;
+    if (code > 31 && (code < 48 || code > 57)){
+      e.preventDefault()
+    }
+  }
 
 }
 

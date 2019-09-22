@@ -3,37 +3,56 @@
   <button type="button" mat-button (click)="drawer.toggle()">
     <mat-icon>shopping_cart</mat-icon>
   </button>
+
+  <div class="mat-toolbar-buttons">
     <span class="spacer"></span>
-    <form *ngIf="searchInputOn">
-      <input matInput type="text"
-             name="searValue"
-             [(ngModel)]="searchValue"
-             placeholder="Search Product"
-             [value]="searchValue"
-             (keyup)="onUserSearch($event.target.value)">
-    </form>
+
     <span>
    <button mat-button (click)="showAllProducts()">All</button>
-   <button mat-button *ngFor="let category of categories" (click)="filterProductsByCategory(category._id)">
+   <button mat-button *ngFor="let category of categories"
+           (click)="filterProductsByCategory(category._id)">
     {{ category.name }}
   </button>
+
   </span>
     <div class="example-sidenav-content">
     </div>
+  </div>
+  <mat-form-field class="mat-toolbar-buttons" style="padding-top: 6px; width: 100px; font-size: 14px"
+                  *ngIf="searchInputOn">
+    <input matInput type="text"
+           name="searValue"
+           [(ngModel)]="searchValue"
+           placeholder="Search Product"
+           [value]="searchValue"
+           (keyup)="onUserSearch($event.target.value)">
+  </mat-form-field>
 </mat-toolbar>
 
 <!--cart sideBar section-->
 
-<mat-drawer-container class="example-container" autosize>
+<mat-drawer-container class="side-nav-cart example-container" > <!--autosize-->>
   <mat-drawer #drawer class="example-sidenav" mode="side">
-    <h4>My cart</h4>
+    <button mat-button (click)="deleteAllProductsFromCart()"><img
+      src="https://img.icons8.com/ios-filled/25/000000/clear-shopping-cart.png">Empty Cart</button>
+    <h4>My Cart</h4>
 
     <div *ngIf="this.authService.userCart.products.length > 0">
-      <button mat-button (click)="deleteAllProductsFromCart()">Empty Cart</button>
+
+        <div style="float: right;position: absolute;padding-left:150px; padding-top: 150px"><h4>Total:<br/> {{totalCartPrice | currency:"USD"}}</h4>
+
+          <div style="float: left"><button *ngIf="totalCartPrice" mat-button routerLink="/order" class="checkout-btn"><img
+            src="https://img.icons8.com/ios-filled/50/000000/cash-register.png"><h3>Checkout</h3></button></div>
+
+        </div>
+    </div>
+
+<div style="display: block;float: left">
       <div class="row shopping-cart-item" *ngFor="let cartProduct of currentCartProducts">
         <div class="col-md-5 to-left cartItem">
           <img class="card-img-top" [src]="productsForCart[cartProduct._id].imageURL">
         </div>
+        <div class="carts-products-wrapper">
         <ul class="col-md-7 to-center">
           <li>
             <span>{{cartProduct.quantity}}</span> {{productsForCart[cartProduct._id].name}}
@@ -43,10 +62,10 @@
         </ul>
       </div>
       <div>
-        <p>Total<span> {{totalCartPrice | currency:"USD"}}  </span></p>
+      </div>
       </div>
     </div>
-    <button *ngIf="totalCartPrice" mat-button routerLink="/order" class="checkout-btn">Checkout</button>
+
   </mat-drawer>
 
   <div *ngIf="!ProductsByCategory">
@@ -55,11 +74,12 @@
     <span *ngIf="searchValue && numOfSearchResults !==0">Results: {{numOfSearchResults}}</span>
     <div class="row">
       <mat-card class="col-lg-2 col-md-4 col-md-6" *ngFor="let item of products | keyvalue">
-        <div class="to-center productImage">
-          <img class="card-img-top" [src]="products[item.key].imageURL">
-        </div>
+
         <div class="mat-card-content">
-          <h4 class="to-center">{{products[item.key].name}}</h4>
+          <h4 class="to-center">{{capFirstLetter(products[item.key].name)}}</h4>
+          <div class="to-center productImage">
+            <img class="card-img-top" [src]="products[item.key].imageURL">
+          </div>
           <p class="to-center">{{products[item.key].price | currency:"USD"}}</p>
 
 
@@ -68,14 +88,16 @@
                     (click)="addToCart(item.key)">Add to cart
             </button>
             <div *ngIf="productId === item.key" class="to-center">
-              <form>
-                <button class="col-2" mat-button (click)="removeItem()">-</button>
-                <input type="number" name="quantity" [(ngModel)]="quantity">
-                <button class="col-2" mat-button (click)="addItem()">+</button>
+              <form class="product-list">
+                <button mat-button (click)="addItem()">+</button>
+                <input class="mat-input-element" (keydown)="allowNumberOnly($event)" min="1" type="number"
+                       name="quantity" [(ngModel)]="quantity">
+                <button mat-button (click)="removeItem()">-</button>
                 <button *ngIf="productId === item.key" mat-button class="justifier"
                         (click)="sendToCart(item.key,quantity)">
                   Send to cart
                 </button>
+
               </form>
             </div>
           </div>
@@ -86,7 +108,7 @@
 
   <!--Products by category-->
   <div class="row">
-    <mat-card class="col-lg-2 col-4-md col-sm-6" *ngFor="let product of ProductsByCategory">
+    <mat-card class="col-lg-2 col-4-md col-sm-6 tp-card" *ngFor="let product of ProductsByCategory">
       <div class="to-center productImg">
         <img class="card-img-top" [src]="product.imageURL">
       </div>
@@ -112,4 +134,6 @@
     </mat-card>
   </div>
 </mat-drawer-container>
+
+
 

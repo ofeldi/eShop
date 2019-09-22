@@ -4,30 +4,26 @@ import {AuthService} from "../services/auth.service";
 
 @Injectable()
 
-export class AuthGuard implements CanActivate {
-  isAdmin:boolean;
+export class AdminGuard implements CanActivate {
+
+  userToken:any;
 
   constructor(private authService: AuthService,
               private router: Router) {
   }
 
+
   canActivate() {
-      this.authService.loadUserPayload();
-      const id = this.authService.currentUserData.id;
-
-      if(!id){
-        this.router.navigate([''])
-      return false;
-      }
-
-      this.authService.checkIfUserAdmin(id).subscribe(data =>{
-        this.isAdmin = data.isAdmin;
-      })
-    if (this.authService.isLoggedUser() && this.isAdmin === true){
+    this.authService.loadToken();
+    this.userToken = this.authService.currentUserToken;
+    let tokenInfo = this.authService.getDecodedAccessToken(this.userToken);
+    if(this.authService.isLoggedUser() && tokenInfo.isAdmin === true){
       return true;
-    } else {
+    }else{
       this.router.navigate(['dashboard']);
       return false;
     }
   }
+
+
 }

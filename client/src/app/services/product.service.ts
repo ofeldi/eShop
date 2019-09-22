@@ -34,6 +34,14 @@ getProductById(productId):Observable<Product>{
     return this.http.get<any>(`http://localhost:4000/api/product/search?name=${name}`);
   }
 
+  editProduct(productId,editedProduct,token):Observable<Product>{
+    return this.http.put<Product>(`http://localhost:4000/api/product/editProductById/${productId}`,editedProduct,{headers: {Authorization: token}});
+  }
+
+  createNewProduct(product,token):Observable<Product>{
+    return this.http.post<Product>('http://localhost:4000/api/product/createNewProduct',product,{headers: {Authorization: token}});
+  }
+
   }
 
 

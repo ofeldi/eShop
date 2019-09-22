@@ -5,6 +5,8 @@ import { Credentials } from "../models/Credentials";
 import {User} from "../models/User";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {Cart} from "../models/Cart";
+ import * as jwt_decode from "jwt-decode";
+
 
 const httpOptions = {
   headers:new HttpHeaders({
@@ -81,7 +83,17 @@ localStorage.setItem('cart',JSON.stringify(currentUserCart));
     this.userCart = JSON.parse(localStorage.getItem('cart'));
   }
 
-
+  getDecodedAccessToken = (token:string): any =>{
+    try{
+      return jwt_decode(token)
+    }
+    catch(Error){
+      return null
+    }
+  }
 
 
 }
+
+
+

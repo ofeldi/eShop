@@ -54,7 +54,9 @@ export class SignupComponent implements OnInit {
   ];
 
   onFirstStepSubmit() {
-
+    if(this.authService.isLoggedUser()){
+      this.router.navigate(['dashboard'])
+    }
     const signUpDetails = this.firstFormGroup.getRawValue();
     const identityNumber = signUpDetails.identityNumber.toString();
 

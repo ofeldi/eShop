@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Add New Product</h2>
+
+<form [formGroup]="addProductForm" (ngSubmit)="save()">
+  <mat-dialog-content class="mat-typography">
+    <div class="form-body">
+      <mat-form-field appearance="outline" class="justifier">
+        <mat-label>Name</mat-label>
+        <input class="form-input" matInput
+               placeholder="New Product Name"
+               formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="justifier">
+        <mat-label>Category</mat-label>
+        <mat-select placeholder="Category"
+                    formControlName="categoryId">
+          <mat-option *ngFor="let item of data.categories | keyvalue" [value]="data.categories[item.key]._id">
+            {{data.categories[item.key].name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" class="justifier">
+        <mat-label>Price</mat-label>
+        <input class="form-input" matInput type="number" [min]='0'
+               formControlName="price"
+               placeholder="New Product Price">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="justifier">
+        <mat-label>ImageURL</mat-label>
+        <input class="form-input" matInput
+               formControlName="imageURL">
+      </mat-form-field>
+
+    </div>
+  </mat-dialog-content>
+
+  <div class="form-footer">
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel Edit</button>
+      <button mat-button type="submit">Save Changes</button>
+    </mat-dialog-actions>
+  </div>
+</form>

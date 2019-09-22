@@ -1,13 +1,17 @@
 <mat-toolbar color="primary">
    <mat-toolbar-row>
-     <button mat-button routerLink="">Home</button>
+     <button mat-button routerLink=""><i class="material-icons">home</i>Home</button>
      <div fxFlex fxLayout fxLayoutAlign="end"></div>
      <span class="example" fill-remaining-space></span>
      <span class="align-center"></span>
      <span class="example-spacer"></span>
       <!-- <button *ngIf="authService.isLoggedUser()" routerLink="dashboard" mat-button>Dashboard</button>-->
-       <button *ngIf="!authService.isLoggedUser()" routerLink="signup" mat-button>Signup</button>
-       <button *ngIf="!authService.isLoggedUser()" routerLink="login" mat-button>Login</button>
+       <button *ngIf="!authService.isLoggedUser()" routerLink="signup" mat-button>
+         <i class="material-icons">subject</i>
+         Signup</button>
+       <button *ngIf="!authService.isLoggedUser()" routerLink="login" mat-button>
+         <i class="material-icons">input</i>
+         Login</button>
      <button mat-button *ngIf="authService.isLoggedUser()" [matMenuTriggerFor]="menu">
        <mat-icon>account_circle</mat-icon>
        {{ capFirstLetter(authService.currentUserData.firstName)}} {{ capFirstLetter(authService.currentUserData.lastName)}}
