@@ -53,5 +53,17 @@ console.log(newProduct);
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  allowNumberOnly(e) {
+    const code = (e.which) ? e.which : e.keycode;
+    if ( code == 45) {
+     // if (code > 31 && (code < 48 || code > 57))
+      {
+        console.log("Oren");
+        e.preventDefault()
+      }
+    }
+  }
+
+
 }
 

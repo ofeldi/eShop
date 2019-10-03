@@ -22,34 +22,59 @@
     </div>
 </form>
   </div>-->
+<link rel="stylesheet" href="../../../assets/css/style.css">
+
+<mat-card class="box">
+  <mat-card-header>
+    <mat-card-title>Hello Shopper</mat-card-title>
+  </mat-card-header>
+
+  <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onUserLogin()">
+    <mat-card-content>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="loginForm.get('email').errors?.serverError">
+          {{ loginForm.get('email').errors?.serverError}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input type="password" matInput placeholder="Your Password" formControlName="password">
+        <mat-error *ngIf="loginForm.get('password').errors?.serverError">
+          {{ loginForm.get('password').errors?.serverError}}
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <button mat-stroked-button color="black" class="btn-block" type="submit">Take Me In</button>
+  </form>
+</mat-card>
+
+<div id="banner" class="banner full-screen-mode parallax">
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+      <div class="col-md-8 col-lg-6">
+        <div class="login d-flex align-items-center py-5">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-9 col-lg-8 mx-auto">
+                <div class="home-header">
+                  <div class="home-components">
 
 
+                    <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
 
-  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
 
-    <mat-card class="box">
-      <mat-card-header>
-        <mat-card-title>Hello Shopper</mat-card-title>
-      </mat-card-header>
+                    </div>
+                    <button mat-button *ngIf="authService.isLoggedUser()" routerLink="shop">Continue Shopping</button>
 
-      <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onUserLogin()">
-        <mat-card-content>
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Email" formControlName="email">
-            <mat-error *ngIf="loginForm.get('email').errors?.serverError">
-              {{ loginForm.get('email').errors?.serverError}}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="example-full-width">
-            <input type="password" matInput placeholder="Your Password" formControlName="password">
-            <mat-error *ngIf="loginForm.get('password').errors?.serverError">
-              {{ loginForm.get('password').errors?.serverError}}
-            </mat-error>
-          </mat-form-field>
-        </mat-card-content>
-        <button mat-stroked-button color="black" class="btn-block" type="submit">Take Me In</button>
-      </form>
-    </mat-card>
-
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>

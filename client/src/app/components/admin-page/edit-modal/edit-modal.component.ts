@@ -50,14 +50,20 @@ export class EditModalComponent implements OnInit {
       imageURL: newFormValues.imageURL
     };
 
-    this.productService.editProduct(productID,editedProduct,this.adminToken).subscribe(data=>{
-      this.dialogRef.close(data);
-    })
-
+      this.productService.editProduct(productID, editedProduct, this.adminToken).subscribe(data => {
+        this.dialogRef.close(data);
+      })
   }
 
   capFirstLetter(string){
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  allowNumberOnly(e){
+    const code = (e.which) ? e.which : e.keycode;
+    if (code > 31 && (code < 48 || code > 57)){
+      e.preventDefault()
+    }
   }
 
 }

@@ -8,7 +8,7 @@
                placeholder="{{capFirstLetter(data.preEditFields.name)}}"
                formControlName="name"
                [value]="data.preEditFields.name"
-               >
+               required>
 
       </mat-form-field>
 
@@ -28,7 +28,9 @@
         <input class="form-input" matInput type="number" [min]='0'
                placeholder="{{data.preEditFields.price | currency:'USD'}}"
                formControlName="price"
-               [value]="data.preEditFields.price">
+               [value]="data.preEditFields.price"
+               required
+               >
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="justifier">
@@ -37,7 +39,7 @@
                placeholder="{{data.preEditFields.imageURL}}"
                formControlName="imageURL"
                [value]="data.preEditFields.imageURL"
-        >
+               required>
       </mat-form-field>
 
     </div>
@@ -46,7 +48,7 @@
   <div class="form-footer">
     <mat-dialog-actions align="end">
       <button mat-button mat-dialog-close>Cancel Edit</button>
-      <button mat-button type="submit">Save Changes</button>
+      <button mat-button type="submit" [disabled]="editProductForm.invalid">Save Changes</button>
     </mat-dialog-actions>
   </div>
 </form>

@@ -3,6 +3,7 @@ import {ProductService} from "../../services/product.service";
 import { OrderService } from "../../services/order.service";
 import { AuthService } from "../../services/auth.service";
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -10,7 +11,7 @@ import { AuthService } from "../../services/auth.service";
 })
 export class HomeComponent implements OnInit {
   numOfProducts: number;
-  numOfOrders:number;
+  numOfOrders:Number;
 
   constructor(private productService: ProductService,
               private orderService: OrderService,
@@ -24,8 +25,8 @@ export class HomeComponent implements OnInit {
     });
 
 
-    this.orderService.getAllOrders().subscribe(data =>{
-      this.numOfOrders = data.length;
+    this.orderService.getAllOrdersLength().subscribe(data =>{
+      this.numOfOrders = data;
 
     });
 

@@ -66,9 +66,6 @@ export class DashboardComponent implements OnInit {
       }, 300)
     })
 
-
-
-
   }
 
   capFirstLetter(string){

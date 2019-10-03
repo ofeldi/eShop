@@ -17,8 +17,12 @@ export class OrderService {
 
   constructor(private http:HttpClient) { }
 
-  getAllOrders():Observable<Order[]>{
-    return this.http.get<Order[]>('http://localhost:4000/api/order/orders')
+  getAllOrders(token):Observable<Order[]>{
+    return this.http.get<Order[]>('http://localhost:4000/api/order/orders',{headers:{Authorization:token}})
+  }
+
+  getAllOrdersLength():Observable<Number>{
+    return this.http.get<Number>('http://localhost:4000/api/order/ordersLength')
   }
 
   createNewOrder(order,token):Observable<any> {

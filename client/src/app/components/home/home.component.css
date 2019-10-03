@@ -1,0 +1,83 @@
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+.home-header{
+  font-family: 'Chewy', cursive;
+}
+
+.home-components{
+  width: 100%;
+
+}
+
+.num-of-products{
+  color: black;
+}
+
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
+}
+
+.login,
+.image {
+  min-height: 85vh;
+}
+
+/*.bg-image {
+  background-image: url('https://cdn1.psfk.com/wp-content/uploads/2019/09/rob-maxwell-6Xb0-zJM_lU-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+
+}*/
+
+.login-heading {
+  font-weight: 300;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+}
+
+.form-label-group {
+  position: relative;
+  /*margin-bottom: 1rem;*/
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
+}
+
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+
+

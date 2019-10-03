@@ -40,7 +40,8 @@ import { NotFoundComponent } from './components/layout/not-found/not-found.compo
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { EditModalComponent } from './components/admin-page/edit-modal/edit-modal.component';
 import { AddModalComponent } from './components/admin-page/add-modal/add-modal.component';
-
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { CountUpModule } from 'countup.js-angular2';
 
 
 
@@ -85,7 +86,9 @@ import { AddModalComponent } from './components/admin-page/add-modal/add-modal.c
     MatProgressBarModule,
     NgHighlightModule,
     MyMaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    AngularFontAwesomeModule,
+    CountUpModule
   ],
   entryComponents:[
     EditModalComponent,

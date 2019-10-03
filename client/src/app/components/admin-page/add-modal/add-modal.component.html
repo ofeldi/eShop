@@ -7,7 +7,8 @@
         <mat-label>Name</mat-label>
         <input class="form-input" matInput
                placeholder="New Product Name"
-               formControlName="name">
+               formControlName="name"
+               required>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="justifier">
@@ -25,13 +26,17 @@
         <mat-label>Price</mat-label>
         <input class="form-input" matInput type="number" [min]='0'
                formControlName="price"
-               placeholder="New Product Price">
+               placeholder="New Product Price"
+               required
+               (keydown)="allowNumberOnly($event)"
+              >
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="justifier">
         <mat-label>ImageURL</mat-label>
         <input class="form-input" matInput
-               formControlName="imageURL">
+               formControlName="imageURL"
+        required>
       </mat-form-field>
 
     </div>
@@ -39,8 +44,8 @@
 
   <div class="form-footer">
     <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>Cancel Edit</button>
-      <button mat-button type="submit">Save Changes</button>
+      <button mat-button mat-dialog-close >Cancel Edit</button>
+      <button mat-button type="submit" [disabled]="addProductForm.invalid">Save Changes</button>
     </mat-dialog-actions>
   </div>
 </form>
