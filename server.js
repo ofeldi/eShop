@@ -34,14 +34,14 @@ mongoose
 // Passport middleware
 app.use(passport.initialize());
 
-// Passport Config
+// Passport config
 require('./config/passport')(passport);
 
 const port = process.env.PORT || 4000;
 
 // Use Routes
-app.use('/api/user', user);
 app.use('/api/cart', cart);
+app.use('/api/user', user);
 app.use('/api/product', product);
 app.use('/api/category', category);
 app.use('/api/order', order);
@@ -50,11 +50,11 @@ app.use('/api/order', order);
 app.listen(port, () => console.log(`Server is running on port ${port}`));
 
 
-//for Deoploy
+//for Deploy
 // Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/dist/<name-of-app>'));
+app.use(express.static(__dirname + '/dist/eShop'));
 
 app.get('/*', function(req,res) {
 
-    res.sendFile(path.join(__dirname+'/dist/<name-of-app>/index.html'));
+    res.sendFile(path.join(__dirname+'/dist/eShop/index.html'));
 });
