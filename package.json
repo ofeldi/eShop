@@ -4,6 +4,11 @@
   "description": "eshop",
   "main": "server.js",
   "scripts": {
+    "ng": "ng",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
     "start": "node server.js",
     "server": "nodemon server.js",
     "postinstall": "ng build --aot --prod"
