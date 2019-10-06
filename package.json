@@ -10,8 +10,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start": "node server.js",
-    "server": "nodemon server.js"
-  },
+    "server": "nodemon server.js",
+    "postinstall": "ng build --aot --prod"
+},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/ofeldi/eShop.git"
