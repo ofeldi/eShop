@@ -48,3 +48,13 @@ app.use('/api/order', order);
 
 // Listen
 app.listen(port, () => console.log(`Server is running on port ${port}`));
+
+
+//for Deoploy
+// Serve only the static files form the dist directory
+app.use(express.static(__dirname + '/dist/<name-of-app>'));
+
+app.get('/*', function(req,res) {
+
+    res.sendFile(path.join(__dirname+'/dist/<name-of-app>/index.html'));
+});

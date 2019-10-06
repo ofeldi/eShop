@@ -77,7 +77,7 @@ exports.deleteProductFromCart = (req, res) => {
 };
 
 exports.deleteAllProductsFromCart = (req, res) => {
-    Cart.updateOne({_id: req.params.id}, {products: []},
+    Cart.updateOne({_id: req.params.id}, {products: [],totalCartPrice:0},
         {safe: true, multi: true})
         .then(() => {
             Cart.findOne({_id: req.params.id})
@@ -149,7 +149,7 @@ exports.getUserCartStatus = (req, res) => {
             }
             if (cart.isOpen === 1) {
                 return res.status(201).json({
-                    msg: `you have an open cart from ${cart.date}`,
+                    msg: cart.date,
                     status: 1,
                     cart: cart
                 })
@@ -189,3 +189,5 @@ exports.setCartTotalPrice = (req,res) =>{
             res.status(500).send(err);
         })
 }
+
+

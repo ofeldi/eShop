@@ -98,7 +98,7 @@ exports.userLogin = (req, res) => {
     User.findOne({email}).then(user => {
         // Check for user
         if (!user) {
-            errors.email = 'User not found';
+            errors.email = 'User was not found';
             return res.status(400).json(errors);
         }
 
@@ -116,6 +116,29 @@ exports.userLogin = (req, res) => {
                         street: user.street,
                         isAdmin: user.isAdmin
                     }; // Create JWT Payload
+
+
+                    if(payload.isAdmin){
+                        const adminPayload ={
+                            id:payload.id,
+                            firstName: payload.firstName,
+                            lastName:payload.lastName,
+                            identityNumber:payload.identityNumber,
+                            isAdmin: payload.isAdmin
+                        };
+                      jwt.sign(
+                          adminPayload,
+                          keys.secretOrKey,
+                          {expiresIn: 10000},
+                          (err,token) =>{
+                              res.json({
+                                  admin:adminPayload,
+                                  token: 'Bearer ' + token
+                              })
+                          });
+                      return;
+                    }
+
 
                     // Sign Token
                     jwt.sign(
@@ -136,3 +159,31 @@ exports.userLogin = (req, res) => {
             })
     })
 };
+
+/*exports.checkIfUserAdmin = (req, res) => {
+    User.findById(req.params.id)
+        .then(user => {
+            //console.log(user);
+
+            if (user.isAdmin){
+                res.status(200).json({
+                    user: user,
+                    success:true
+                });
+
+            } else if (user.isAdmin === false) {
+        return (
+               res.status(204).json({
+                    msg: "User is not an Admin",
+                    success:false
+                }))
+            }
+        })
+        .catch(err => res.status(500).json({
+            msg: "User is not an Admin",
+            success:false
+
+        }))
+}*/
+
+

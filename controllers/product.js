@@ -8,10 +8,9 @@ exports.createNewProduct = (req, res) => {
         imageURL: req.body.imageURL,
     });
     product.save()
-        .then(product => res.status(200).json({
-            msg: "product saved successfully",
-            product: product
-        }))
+        .then(product => res.status(200).json(
+           product
+        ))
         .catch(err => console.log(err));
 };
 
@@ -66,3 +65,16 @@ exports.searchProduct = (req,res,next) => {
             })
         })
 };
+
+exports.editProductById = (req,res)=>{
+    Product.findByIdAndUpdate({_id:req.params.id},req.body)
+        .then(()=>{
+            Product.findOne({_id:req.params.id})
+                .then((product)=>{
+                    res.json(product)
+                }).catch(err=>{
+                    console.error(err);
+                    res.status(500).send(err)
+            })
+        })
+}

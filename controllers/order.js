@@ -30,16 +30,16 @@ exports.createNewOrder = (req, res) => {
         .then(orders => {
             // check if the same delivery date exist more than 3 times
             if (orders.length === 2) {
-                        let creditCardEnd = creditCard.slice(12, 16)
-                        const newOrder = new Order({
-                            userId: userId,
-                            cartId: cartId,
-                            totalPrice: totalPrice,
-                            city: city,
-                            street: street,
-                            orderDate: new Date(),
-                            deliveryDate: deliveryDate,
-                            creditCard: creditCardEnd,
+                let creditCardEnd = creditCard.slice(12, 16)
+                const newOrder = new Order({
+                    userId: userId,
+                    cartId: cartId,
+                    totalPrice: totalPrice,
+                    city: city,
+                    street: street,
+                    orderDate: new Date(),
+                    deliveryDate: deliveryDate,
+                    creditCard: creditCardEnd,
                     Products: cartProducts,
                     cart: cart
                 });
@@ -50,7 +50,7 @@ exports.createNewOrder = (req, res) => {
                         setFullyBookedDate(req)
                     })
                     .then(order => res.status(200).json({
-                        success:"Order created",
+                        success: "Order created",
                         order: order
                     }))
                     .catch(err => console.log(err))
@@ -75,7 +75,7 @@ exports.createNewOrder = (req, res) => {
                         //setFullyBookedDate(req)
                     })
                     .then(order => res.status(200).json({
-                       success:"Order created",
+                        success: "Order created",
                         order: order
                     }))
                     .catch(err => console.log(err))
@@ -88,8 +88,8 @@ const deleteCart = (req, res) => {
     Cart.findById(req.body.cartId)
         .then(cart => {
             cart.remove()
-                .then(() => res.json({success: true}))
-                //.catch(err => res.status(404).json({success: false}))
+            // .then(() => res.json({success: true}))
+            //.catch(err => res.status(404).json({success: false}))
         })
 }
 
@@ -101,6 +101,16 @@ exports.getOrders = (req, res) => {
         }))
 };
 
+exports.getOrdersLength = (req, res) => {
+    Order.find({})
+        .then(orders => res.status(200).json(orders.length))
+        .catch(err => res.status(500).json({
+            msg: "could not find any orders"
+        }))
+};
+
+
+
 const setFullyBookedDate = (req, res) => {
     const fullyBookedDate = new OrderDates({
         date: req.body.deliveryDate
@@ -109,19 +119,18 @@ const setFullyBookedDate = (req, res) => {
 
 };
 
-exports.getOccupiedDates = (req,res) =>{
+exports.getOccupiedDates = (req, res) => {
     OrderDates.find({})
-        .then((dates)=>{
+        .then((dates) => {
             return res.status(200).json(dates)
         })
-        .catch(err=>{
+        .catch(err => {
             console.log(err);
             res.status(500).json({
-                msg:"Error in occupied dates"
+                msg: "Error in occupied dates"
             })
         })
 };
-
 
 
 /*const updateCartStatus = (req, res) => {
@@ -137,5 +146,16 @@ exports.getOccupiedDates = (req,res) =>{
 };*/
 
 
-
 // create receipt functions here
+
+exports.getLatestOrderByUserId = (req, res) => {
+    Order.find({userId: req.params.id})
+        .sort({"orderDate": -1}).limit(1)
+        .then(order => {
+            res.json(order)
+        })
+        .catch((err) => {
+        console.error(err);
+        res.status(500).send(err);
+    })
+}

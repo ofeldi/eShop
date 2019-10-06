@@ -99,10 +99,9 @@ import { MatBadgeModule } from "@angular/material/badge";
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(ngRedux: NgRedux<IAppState>,
-              devTools: DevToolsExtension,
+  constructor(devTools: DevToolsExtension
   ){
     const enhancers = isDevMode() ? [devTools.enhancer()] : [];
-   ngRedux.configureStore(rootReducer,INITIAL_STATE,[],enhancers);
+   //ngRedux.configureStore(rootReducer,INITIAL_STATE,[],enhancers);
   }
 }
