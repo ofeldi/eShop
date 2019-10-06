@@ -10,8 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start": "node server.js",
-    "server": "nodemon server.js",
-    "postinstall": "ng build --aot --prod"
+    "server": "nodemon server.js"
   },
   "repository": {
     "type": "git",
