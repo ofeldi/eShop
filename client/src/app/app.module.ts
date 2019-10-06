@@ -28,7 +28,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { NavbarComponent } from "./components/layout/navbar/navbar.component";
 
 import { NgRedux,NgReduxModule,DevToolsExtension } from "ng2-redux";
-import { IAppState, rootReducer } from "./store";
+import { IAppState } from "./store";
 import { INITIAL_STATE } from './store';
 import { SidebarComponent } from './components/layout/sidebar/sidebar.component';
 import { OrderComponent } from './components/order/order.component';
