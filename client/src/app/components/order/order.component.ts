@@ -98,6 +98,7 @@ export class OrderComponent implements OnInit {
       productsObj[productsArray[i]._id] = productsArray[i]
     }
     this.productsForCart = productsObj;
+    console.log(this.productsForCart);
   }
 
   setUserAddress() {

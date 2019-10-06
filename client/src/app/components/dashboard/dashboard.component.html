@@ -1,6 +1,7 @@
+<!--<body>
 <div *ngIf="!isLoading">
-<div>dashboard</div>
-<!--set go the shop as ngIf cart is opened-->
+
+&lt;!&ndash;set go the shop as ngIf cart is opened&ndash;&gt;
 <div>Welcome:
   {{ capFirstLetter(authService.currentUserData.firstName)}} {{ capFirstLetter(authService.currentUserData.lastName)}}
 </div>
@@ -9,3 +10,96 @@
   <div>{{dashBoarMsg}}</div>
 <div>{{cartStatus}}</div>
 </div>
+</body>-->
+
+
+
+<head>
+  <title>Slim - Free Bootstrap 4 Template by Colorlib</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900" rel="stylesheet">
+
+  <!--  <link rel="stylesheet" href="../../assets/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/animate.css">
+
+    <link rel="stylesheet" href="../../assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../../assets/magnific-popup.css">
+
+    <link rel="stylesheet" href="../../assets/aos.css">
+
+    <link rel="stylesheet" href="../../assets/ionicons.min.css">
+
+    <link rel="stylesheet" href="../../assets/flaticon.css">
+    <link rel="stylesheet" href="../../assets/icomoon.css">
+    <link rel="stylesheet" href="../../assets/astyle.css">-->
+
+
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+
+<section class="ftco-section ftco-services-2" id="services-section">
+  <div class="container">
+    <div class="row justify-content-center pb-5">
+      <div class="col-md-12 heading-section text-center ftco-animate">
+
+        <div>Welcome {{ capFirstLetter(authService.currentUserData.firstName)}} {{ capFirstLetter(authService.currentUserData.lastName)}}
+        </div>
+
+        <div>{{dashBoardMsg}}</div>
+        <div>{{cartStatus}}</div>
+
+
+      </div><button mat-button color="primary" *ngIf="authService.isLoggedUser()" routerLink="/shop">Continue Shopping</button>
+    </div>
+    <div class="row">
+      <div class="col-md d-flex align-self-stretch ftco-animate">
+        <div class="media block-6 services text-center d-block"><div style="float:left;margin-left: 10px;" [countUp]=100></div><div style="float: left">%</div>
+          <div class="icon"><img style="width:120px" src="https://image.flaticon.com/icons/svg/291/291893.svg"></div>
+
+          <div class="media-body">
+            <h3 class="heading mb-3">Groceries From The Heart</h3>
+            <p>All our groceries are selected one by one by our professional picker. That promises the best quality
+              of products you can find on the market.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md d-flex align-self-stretch ftco-animate">
+        <div class="media block-6 services text-center d-block">
+          <div style="float:left;margin-left: 26px;" [countUp]=numOfProducts></div>
+          <div class="icon"><img style="width:120px" src="https://image.flaticon.com/icons/svg/172/172159.svg"></div>
+          <div class="media-body">
+            <h3 class="heading mb-3">Products Available On Our Shop</h3>
+            <p>Variety is our middle name. Our wide network of supplier and short chain of supply assures you get a
+              variety of products under each
+              category. You only have to choose.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md d-flex align-self-stretch ftco-animate">
+        <div class="media block-6 services text-center d-block">
+          <div style="float:left;margin-left: -19px"><span [countUp]=24></span>/<span [countUp]=7></span>/<span [countUp]=365></span></div>
+          <div class="icon"><img style="width:120px" src="https://image.flaticon.com/icons/svg/1411/1411456.svg"></div>
+          <div class="media-body">
+            <h3 class="heading mb-3">We Are Here <br> For You</h3>
+            <p>Anytime, Anywhere. World wide deliveries with just a click of a button. The best technology is at our
+              service.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md d-flex align-self-stretch ftco-animate">
+        <div class="media block-6 services text-center d-block"><div style="float:left;margin-left:16px" [countUp]=numOfOrders></div>
+          <div class="icon"><img style="width:120px" src="https://image.flaticon.com/icons/svg/2155/2155671.svg"></div>
+          <div class="media-body">
+            <h3 class="heading mb-3">Happy Orders Were Delivered On Our Shop</h3>
+            <p>We value you time and money. Our grocery shop offers the best value for your money at any time.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

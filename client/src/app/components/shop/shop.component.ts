@@ -5,6 +5,7 @@ import {Category} from "../../models/Category";
 import {CategoryService} from "../../services/category.service";
 import {Product} from "../../models/Product";
 import {CartService} from "../../services/cart.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-shop',
@@ -28,6 +29,10 @@ export class ShopComponent implements OnInit {
   searchValue:string = "";
   numOfSearchResults:Number;
   isLoading:Boolean = true;
+  navbarOpen=false;
+  categoryId:String;
+  control: FormControl = new FormControl("");
+  totalCartProductsQuantity:Number;
 
   constructor(private authService: AuthService,
               private productService: ProductService,
@@ -64,6 +69,8 @@ console.log(this.currentCartProducts);
       console.log("all products " , this.products);
     })
 
+    this.setTotalCartProductsQuantity();
+
   }
 
   addToCart(productId) {
@@ -99,6 +106,7 @@ console.log(this.currentCartProducts);
         this.updateLocalStorage(data);
         console.log(addedProduct);
         this.setTotalPrice();
+        this.setTotalCartProductsQuantity();
       })
   };
 
@@ -117,16 +125,17 @@ console.log(this.currentCartProducts);
 
   filterProductsByCategory(categoryId) {
     // console.log(categoryId)
+    this.categoryId = categoryId;
     this.productService.getProductsByCategoryId(categoryId).subscribe(data => {
       this.ProductsByCategory = data;
       this.searchInputOn = false;
-
     })
   };
 
   showAllProducts() {
     this.ProductsByCategory = null;
     this.searchInputOn = true;
+    this.categoryId = null;
   }
 
   deleteProductFromCart(_id){
@@ -139,6 +148,7 @@ console.log(this.currentCartProducts);
     if (this.currentCartProducts.length == 1){
       const setOpenCart = {isOpen: 0};
       this.updateCartStatus(this.cartId,setOpenCart);
+      this.setTotalCartProductsQuantity();
     }
 
   }
@@ -147,7 +157,8 @@ console.log(this.currentCartProducts);
     this.cartService.deleteAllProductsFromCart(this.cartId,this.userToken).subscribe(data=>{
       console.log(data);
       this.updateLocalStorage(data);
-    })
+      this.setTotalCartProductsQuantity();
+    });
     const setOpenCart = {isOpen: 0};
     this.updateCartStatus(this.cartId,setOpenCart);
 
@@ -198,6 +209,19 @@ console.log(this.currentCartProducts);
       e.preventDefault()
     }
   }
+
+  toggleNavbar(){
+    this.navbarOpen = !this.navbarOpen;
+  }
+
+
+  setTotalCartProductsQuantity() {
+    const cartProductsArr: Product[] = this.authService.userCart.products;
+    const cartProductsQuantityArr = cartProductsArr.map(obj => obj.quantity);
+    this.totalCartProductsQuantity = cartProductsQuantityArr.reduce((a, b) => a + b, 0);
+  }
+
+
 
 }
 

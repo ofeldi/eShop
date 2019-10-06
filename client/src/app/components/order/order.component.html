@@ -1,3 +1,5 @@
+<!--
+
 <button mat-button routerLink="/shop">Back To the Shop</button>
 
 <div *ngIf="totalPrice > 0">
@@ -9,8 +11,9 @@
 
 
 <div name="searchText" *ngIf="!isLoading">
-  <div class="row" *ngFor="let cartProduct of currentCartProducts">
-    <div>Products in Cart: {{totalCartProductsQuantity}}</div>
+
+  <div class="row carts-products" *ngFor="let cartProduct of currentCartProducts">
+    <div>{{productsForCart[cartProduct._id].name}} in the cart: {{totalCartProductsQuantity}}</div>
     <div class="col-md-5 to-left cartItem">
       <img class="cart-item-img" [src]="productsForCart[cartProduct._id].imageURL" alt="...">
     </div>
@@ -87,4 +90,222 @@
 </form>
 
 
+</div>
+-->
+
+<!--Main layout-->
+<div name="searchText" *ngIf="isLoading">
+  <div class="progress md-progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+</div>
+
+
+
+<div name="searchText" *ngIf="!isLoading">
+<main class="mt-5 pt-4">
+  <div class="container wow fadeIn">
+    <button class="btn btn-primary btn-lg btn-block" routerLink="/shop">Back to Shopping</button>
+    <!-- Heading -->
+    <h2 class="my-5 h2 text-center">Checkout form</h2>
+
+    <!--Grid row-->
+    <div class="row">
+
+      <!--Grid column-->
+      <div class="col-md-8 mb-4">
+
+        <!--Card-->
+        <div class="card">
+
+          <!--Card content-->
+          <form [formGroup]="orderForm"  (ngSubmit)="onOrderSubmit()" class="card-body">
+
+            <!--Grid row-->
+            <div class="row">
+
+              <!--Grid column-->
+              <div class="col-md-6 mb-2"></div>
+              <!--Grid column-->
+
+              <!--Grid column-->
+              <div class="col-md-6 mb-2">
+
+              </div>
+              <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+
+            <!--address-->
+            <div class="md-form mb-5">
+              <mat-label>Street</mat-label>
+              <mat-form-field appearance="outline" class="justifier">
+              <input matInput
+                     class="form-control"
+                     placeholder="Double Click Here For Your Registered Address"
+                     formControlName="street"
+                     id="street"
+                     type="text"
+                     (dblclick)="setUserAddress()"
+              >
+
+                <mat-error *ngIf="orderForm.get('street').errors?.serverError">
+                  {{ orderForm.get('street').errors?.serverError}}
+                </mat-error>
+              </mat-form-field>
+
+            </div>
+
+
+            <!--Grid row-->
+            <div class="row">
+
+              <!--Grid column-->
+              <div class="col-lg-4 col-md-12 mb-4">
+
+                <mat-form-field>
+                  <mat-select placeholder="City" formControlName="city">
+                    <mat-option *ngFor="let city of cities" [value]="city.value">
+                      {{city.viewValue}}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-error *ngIf="orderForm.get('city').errors?.serverError">
+                    {{ orderForm.get('city').errors?.serverError}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <!--Grid column-->
+
+              <mat-form-field appearance="outline" class="justifier">
+                <mat-label>Shipping Date</mat-label>
+                <input matInput readonly [matDatepicker]="deliveryDate" placeholder="Select a delivery date"
+                       formControlName="deliveryDate" [min]="minDate">
+                <mat-datepicker-toggle matSuffix [for]="deliveryDate"></mat-datepicker-toggle>
+                <mat-datepicker #deliveryDate touchUi [dateClass]="dateClass" ></mat-datepicker>
+
+                <mat-error *ngIf="orderForm.get('deliveryDate').errors?.serverError">
+                  {{ orderForm.get('deliveryDate').errors?.serverError}}
+                </mat-error>
+              </mat-form-field>
+
+              <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+            <div class="d-block my-3">
+              <div class="custom-control custom-radio">
+                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                <label class="custom-control-label" for="credit">Credit card</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                <label class="custom-control-label" for="debit">Debit card</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                <label class="custom-control-label" for="paypal">Paypal</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cc-name">Name on card</label>
+                <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                <small class="text-muted">Full name as displayed on card</small>
+                <div class="invalid-feedback">
+                  Name on card is required
+                </div>
+              </div>
+
+              <mat-form-field appearance="outline" class="justifier">
+                <mat-label>Credit Card</mat-label>
+                <input matInput
+                       formControlName="creditCard"
+                       id="creditCard"
+                       type="number"
+                >
+                <mat-error *ngIf="orderForm.get('creditCard').errors?.serverError">
+                  {{ orderForm.get('creditCard').errors?.serverError}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="cc-expiration">Expiration</label>
+                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                <div class="invalid-feedback">
+                  Expiration date required
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label for="cc-expiration">CVV</label>
+                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                <div class="invalid-feedback">
+                  Security code required
+                </div>
+              </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+
+          </form>
+
+        </div>
+        <!--/.Card-->
+
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-md-4 mb-4">
+
+        <!-- Heading -->
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span>Your cart</span>
+          <div >{{currentCartProducts.length}} Products</div>
+          <span class="badge badge-secondary badge-pill">{{ totalPrice | currency: 'USD' }}</span>
+        </h4>
+
+        <!-- Cart -->
+        <div *ngIf="totalPrice > 0">
+          <form>
+            <input autocomplete="off" type="search" name="searchValue" placeholder="Search a Products"
+                   [(ngModel)]="searchValue">
+          </form>
+        <div class="row carts-products" *ngFor="let cartProduct of currentCartProducts">
+
+          <div class="col-md-5 to-left cartItem">
+            <ul class="list-group mb-3 z-depth-1">
+              <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <img class="cart-item-img" [src]="productsForCart[cartProduct._id].imageURL" alt="...">
+                <span>{{ cartProduct.quantity }}</span><div> &nbsp;x&nbsp; </div>
+                <span ngxTextHighlight
+                      [content]="productsForCart[cartProduct._id].name"
+                      [searchTerm]="searchValue"
+                      [caseSensitive]="false"></span> <div>&nbsp; Total:
+                <span>{{ productsForCart[cartProduct._id].price * cartProduct.quantity | currency: 'USD'}}</span>
+              </div>
+              </li></ul>
+          </div>
+        </div>
+        <div>
+          <p>Total: <span>{{ totalPrice | currency: 'USD' }}</span></p>
+        </div>
+
+        <!-- Cart -->
+
+
+      </div>
+      <!--Grid column-->
+    </div>
+    <!--Grid row-->
+
+  </div>
+<!--Main layout-->
+
+  </div>
+</main>
 </div>

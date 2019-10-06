@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   numOfProducts: number;
   numOfOrders:Number;
 
+
   constructor(private productService: ProductService,
               private orderService: OrderService,
               private authService: AuthService

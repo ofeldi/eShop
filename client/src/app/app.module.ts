@@ -42,7 +42,7 @@ import { EditModalComponent } from './components/admin-page/edit-modal/edit-moda
 import { AddModalComponent } from './components/admin-page/add-modal/add-modal.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { CountUpModule } from 'countup.js-angular2';
-
+import { MatBadgeModule } from "@angular/material/badge";
 
 
 @NgModule({
@@ -88,7 +88,8 @@ import { CountUpModule } from 'countup.js-angular2';
     MyMaterialModule,
     FlexLayoutModule,
     AngularFontAwesomeModule,
-    CountUpModule
+    CountUpModule,
+    MatBadgeModule
   ],
   entryComponents:[
     EditModalComponent,

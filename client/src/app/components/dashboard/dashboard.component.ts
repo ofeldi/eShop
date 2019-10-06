@@ -16,7 +16,8 @@ export class DashboardComponent implements OnInit {
   userToken:String;
   cartStatus:String;
   isLoading:Boolean = true;
-  dashBoarMsg:any;
+  dashBoardMsg:any;
+  numOfOrders:Number;
 
   constructor(private productService: ProductService,
               private authService: AuthService,
@@ -39,22 +40,22 @@ export class DashboardComponent implements OnInit {
           this.orderService.getLatestOrderByUserId(this.userId,this.userToken).subscribe(date=>{
             console.log(date[0])
             if (date[0])  {
-              this.dashBoarMsg = "Welcome back, no opened carts were found. Your last order's date is: " + (new DatePipe ("en").transform(date[0].orderDate,"dd/MM/yyyy"));
+              this.dashBoardMsg = "Welcome back, no opened carts were found. Your last order's date is: " + (new DatePipe ("en").transform(date[0].orderDate,"dd/MM/yyyy"));
             } else {
-              this.dashBoarMsg = "Welcome to our shop, Enjoy your first buy ♥"
+              this.dashBoardMsg = "Welcome to our shop, Enjoy your first buy ♥"
             }
           })
           return;
         }
         if (data.status === 1){
           this.authService.storeCartData(data.cart);
-          this.dashBoarMsg = "You have an opened cart from" + (new DatePipe ("en").transform(data.msg,"dd/MM/yyyy"));
+          this.dashBoardMsg = "You have an opened cart from " + (new DatePipe ("en").transform(data.msg,"dd/MM/yyyy"));
           return;
         } else {
           const userId = {userId : this.userId};
           this.cartService.createNewCart(userId,this.userToken).subscribe(data=>{
             this.authService.storeCartData(data.cart);
-            this.dashBoarMsg = "Welcome to our shop, Enjoy your first buy ♥"
+            this.dashBoardMsg = "Welcome to our shop, Enjoy your first buy ♥"
           });
         }
     });
@@ -66,10 +67,16 @@ export class DashboardComponent implements OnInit {
       }, 300)
     })
 
+    this.orderService.getAllOrdersLength().subscribe(data =>{
+      this.numOfOrders = data;
+    });
+
   }
 
   capFirstLetter(string){
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+
 
 }
