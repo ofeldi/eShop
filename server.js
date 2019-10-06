@@ -52,9 +52,9 @@ app.listen(port, () => console.log(`Server is running on port ${port}`));
 
 //for Deploy
 // Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/dist/eShop'));
+app.use(express.static(__dirname + '/dist/eshop'));
 
 app.get('/*', function(req,res) {
 
-    res.sendFile(path.join(__dirname+'/dist/eShop/index.html'));
+    res.sendFile(path.join(__dirname+'/dist/eshop/index.html'));
 });
