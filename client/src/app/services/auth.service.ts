@@ -28,21 +28,21 @@ currentUserToken:String;
   constructor(private http: HttpClient) { }
 
   checkUserCredentials (userCredentials):Observable<Credentials>{
-    return this.http.post<Credentials>('http://localhost:4000/api/user/registerCheck',userCredentials,httpOptions)
+    return this.http.post<Credentials>('api/user/registerCheck',userCredentials,httpOptions)
 
   }
 
   registerUser (user):Observable<Credentials>{
-    return this.http.post<Credentials>('http://localhost:4000/api/user/register',user,httpOptions)
+    return this.http.post<Credentials>('api/user/register',user,httpOptions)
 
   }
 
   loginUser (loginDetails):Observable<Credentials>{
-    return this.http.post<Credentials>('http://localhost:4000/api/user/login',loginDetails,httpOptions);
+    return this.http.post<Credentials>('api/user/login',loginDetails,httpOptions);
   }
 
   checkIfUserAdmin(userId):Observable<User>{
-    return this.http.get<User>(`http://localhost:4000/api/user/checkIfUserAdmin/${userId}`);
+    return this.http.get<User>(`api/user/checkIfUserAdmin/${userId}`);
   }
 
   storeUserData(token,loggedUser){
