@@ -37,7 +37,7 @@ app.use(passport.initialize());
 // Passport config
 require('./config/passport')(passport);
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 4000;
 
 // Use Routes
 app.use('/api/cart', cart);
@@ -53,12 +53,12 @@ app.listen(port, () => console.log(`Server is running on port ${port}`));
 //for Deploy
 // Serve only the static files form the dist directory
 // Serve only the static files form the dist directory
-app.use(express.static('./dist/{{eshop}}'));
+app.use(express.static(path.join(__dirname,'public')));
 
-app.get('/*', function(req,res) {
+app.get('*', function(req,res) {
 
-    res.sendFile(path.join(__dirname,'/dist/{{eshop}}/index.html'));
+    res.sendFile(path.join(__dirname,'public/index.html'));
 });
 
 // Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 8080);
+app.listen(port,()=>console.log(`Server is running on port ${port}`))
